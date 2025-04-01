@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - Ngân Hàng H</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .about-hero {
+            height: 400px;
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), url('/api/placeholder/1200/400') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .about-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* About Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #ffd700;
+            margin: 10px auto 0;
+        }
+        
+        .about-section {
+            padding: 5rem 5%;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #005b96;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 10px 40px;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -10px;
+            transform: rotate(45deg);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -10px;
+            transform: rotate(45deg);
+        }
+        
+        .timeline-date {
+            position: absolute;
+            top: 20px;
+            width: 80px;
+            height: 30px;
+            background-color: #ffd700;
+            color: #005b96;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-date {
+            right: -100px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            left: -100px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: #ffd700;
+            border: 4px solid #005b96;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 2;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -9px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -9px;
+        }
+        
+        .timeline-content h3 {
+            color: #005b96;
+            margin-bottom: 10px;
+        }
+        
+        /* Values Section */
+        .values-section {
+            padding: 5rem 5%;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .value-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: #005b96;
+        }
+        
+        .value-card h3 {
+            color: #005b96;
+            margin-bottom: 15px;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 5rem 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .team-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .team-card:hover .team-image img {
+            transform: scale(1.1);
+        }
+        
+        .team-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .team-info h3 {
+            color: #005b96;
+            margin-bottom: 5px;
+        }
+        
+        .team-position {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .team-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .team-link {
+            width: 35px;
+            height: 35px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #005b96;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .team-link:hover {
+            background-color: #ffd700;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 5%;
+            background: linear-gradient(to right, #005b96, #007cb9);
+            color: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .stat-text {
+            font-size: 1.1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-content p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .cta-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            /* Timeline responsive */
+            .timeline::after {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-content::after {
+                display: none;
+            }
+            
+            .timeline-date {
+                position: relative;
+                top: 0;
+                margin-bottom: 10px;
+                left: 0 !important;
+                right: 0 !important;
+                transform: translateX(-50%);
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 21px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1>Về Chúng Tôi</h1>
+            <p>Tìm hiểu câu chuyện, tầm nhìn và sứ mệnh của Ngân Hàng XYZ</p>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="section-title">
+            <h2>Câu Chuyện Của Chúng Tôi</h2>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://maianhjsc.com/data/media/917/images/01-2.jpg" alt="Trụ sở Ngân Hàng XYZ">
+            </div>
+            
+            <div class="about-text">
+                <p>Được thành lập vào năm 1995, Ngân Hàng XYZ bắt đầu như một tổ chức tài chính nhỏ với sứ mệnh đơn giản: cung cấp dịch vụ tài chính chất lượng cao, dễ tiếp cận cho mọi đối tượng khách hàng. Từ 5 nhân viên và một văn phòng nhỏ, chúng tôi đã phát triển thành một trong những định chế tài chính hàng đầu tại Việt Nam.</p>
+                
+                <p>Trải qua hơn 25 năm phát triển, Ngân Hàng XYZ đã vượt qua nhiều thách thức của thị trường, từng bước xây dựng hệ thống vững mạnh với hơn 200 chi nhánh và phòng giao dịch trên toàn quốc, phục vụ hơn 5 triệu khách hàng cá nhân và doanh nghiệp.</p>
+                
+                <p>Sự phát triển của chúng tôi dựa trên nền tảng uy tín, sự minh bạch và cam kết mang lại giá trị bền vững cho khách hàng, cổ đông và cộng đồng. Chúng tôi tự hào khi được đồng hành cùng nhiều thế hệ khách hàng, từ những bước đi đầu tiên trên con đường tài chính của họ.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="section-title">
+            <h2>Hành Trình Phát Triển</h2>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">1995</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Thành Lập</h3>
+                    <p>Ngân Hàng XYZ được thành lập với 5 nhân viên và một văn phòng nhỏ tại trung tâm thành phố.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">2002</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Mở Rộng</h3>
+                    <p>Mở rộng mạng lưới với 20 chi nhánh trên khắp cả nước và ra mắt dịch vụ ngân hàng trực tuyến.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">2008</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Vượt Khủng Hoảng</h3>
+                    <p>Vượt qua khủng hoảng tài chính toàn cầu một cách mạnh mẽ nhờ chiến lược quản trị rủi ro hiệu quả.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">2015</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Đổi Mới Số Hóa</h3>
+                    <p>Triển khai chiến lược chuyển đổi số toàn diện, ra mắt ứng dụng Mobile Banking tiên tiến nhất thị trường.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">2020</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Hợp Tác Quốc Tế</h3>
+                    <p>Thiết lập quan hệ đối tác chiến lược với các tổ chức tài chính hàng đầu thế giới, mở rộng dịch vụ quốc tế.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">2023</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Phát Triển Bền Vững</h3>
+                    <p>Ra mắt sáng kiến tài chính xanh và các gói tín dụng hỗ trợ dự án năng lượng tái tạo, bảo vệ môi trường.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="section-title">
+            <h2>Giá Trị Cốt Lõi</h2>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">💎</div>
+                <h3>Uy Tín</h3>
+                <p>Chúng tôi đặt chữ tín lên hàng đầu trong mọi hoạt động, cam kết thực hiện mọi lời hứa với khách hàng, đối tác và cộng đồng.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🛡️</div>
+                <h3>Minh Bạch</h3>
+                <p>Mọi hoạt động của chúng tôi đều được thực hiện với sự minh bạch tuyệt đối, đảm bảo cung cấp thông tin rõ ràng, đầy đủ.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">💡</div>
+                <h3>Đổi Mới</h3>
+                <p>Không ngừng cải tiến và ứng dụng công nghệ tiên tiến để mang đến trải nghiệm ngân hàng hiện đại, thuận tiện nhất.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h3>Đồng Hành</h3>
+                <p>Chúng tôi cam kết đồng hành cùng khách hàng trong mọi hành trình tài chính, từ những bước đầu đến những mục tiêu lớn.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="section-title">
+            <h2>Đội Ngũ Lãnh Đạo</h2>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://www.zdnet.com/a/img/resize/2cb4bc32dba41cc3f0186ca432cc621c7b5d31b9/2022/08/09/0c9cce39-ecca-4549-ba3c-50456372492d/jensen-avatar-2022-crop-for-twitter.jpg?auto=webp&fit=crop&height=1200&width=1200" alt="CEO">
+                </div>
+                <div class="team-info">
+                    <h3>Nguyễn Văn A</h3>
+                    <div class="team-position">Chủ tịch HĐQT</div>
+                    <p>Với hơn 25 năm kinh nghiệm trong lĩnh vực tài chính ngân hàng, ông A là người đặt nền móng cho sự phát triển của Ngân Hàng XYZ.</p>
+                    <div class="team-links">
+                        <a href="#" class="team-link">in</a>
+                        <a href="#" class="team-link">t</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://www.zdnet.com/a/img/resize/2cb4bc32dba41cc3f0186ca432cc621c7b5d31b9/2022/08/09/0c9cce39-ecca-4549-ba3c-50456372492d/jensen-avatar-2022-crop-for-twitter.jpg?auto=webp&fit=crop&height=1200&width=1200" alt="CEO">
+                </div>
+                <div class="team-info">
+                    <h3>Trần Thị B</h3>
+                    <div class="team-position">Tổng Giám Đốc</div>
+                    <p>Bà B gia nhập Ngân Hàng XYZ từ năm 2005 và đã dẫn dắt tổ chức vượt qua nhiều thách thức, đạt được nhiều thành tựu quan trọng.</p>
+                    <div class="team-links">
+                        <a href="#" class="team-link">in</a>
+                        <a href="#" class="team-link">t</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://www.zdnet.com/a/img/resize/2cb4bc32dba41cc3f0186ca432cc621c7b5d31b9/2022/08/09/0c9cce39-ecca-4549-ba3c-50456372492d/jensen-avatar-2022-crop-for-twitter.jpg?auto=webp&fit=crop&height=1200&width=1200" alt="CTO">
+                </div>
+                <div class="team-info">
+                    <h3>Lê Văn C</h3>
+                    <div class="team-position">Giám Đốc Công Nghệ</div>
+                    <p>Ông C là người tiên phong trong việc phát triển và triển khai chiến lược chuyển đổi số của Ngân Hàng XYZ.</p>
+                    <div class="team-links">
+                        <a href="#" class="team-link">in</a>
+                        <a href="#" class="team-link">t</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="https://www.zdnet.com/a/img/resize/2cb4bc32dba41cc3f0186ca432cc621c7b5d31b9/2022/08/09/0c9cce39-ecca-4549-ba3c-50456372492d/jensen-avatar-2022-crop-for-twitter.jpg?auto=webp&fit=crop&height=1200&width=1200" alt="CFO">
+                </div>
+                <div class="team-info">
+                    <h3>Phạm Thị D</h3>
+                    <div class="team-position">Giám Đốc Tài Chính</div>
+                    <p>Với chuyên môn sâu về quản lý tài chính, bà D đã giúp Ngân Hàng XYZ duy trì tình hình tài chính vững mạnh, minh bạch.</p>
+                    <div class="team-links">
+                        <a href="#" class="team-link">in</a>
+                        <a href="#" class="team-link">t</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-text">Chi Nhánh Trên Toàn Quốc</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">5 Triệu+</div>
+                <div class="stat-text">Khách Hàng Tin Tưởng</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">25+</div>
+                <div class="stat-text">Năm Kinh Nghiệm</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">3000+</div>
+                <div class="stat-text">Nhân Viên Tận Tâm</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Đồng Hành Cùng Ngân Hàng XYZ</h2>
+            <p>Chúng tôi cam kết mang đến những giải pháp tài chính phù hợp nhất cho bạn, dù là cá nhân hay doanh nghiệp. Hãy bắt đầu hành trình tài chính của bạn cùng chúng tôi ngay hôm nay.</p>
+            <a href="#" class="cta-btn">Liên Hệ Ngay</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Về Chúng Tôi</h3>
+                <ul>
+                    <li><a href="#">Giới Thiệu</a></li>
+                    <li><a href="#">Lịch Sử Phát Triển</a></li>
+                    <li><a href="#">Cơ Cấu Tổ Chức</a></li>
+                    <li><a href="#">Đội Ngũ Lãnh Đạo</a></li>
+                    <li><a href="#">Cơ Hội Nghề Nghiệp</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Sản Phẩm Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
+                    <li><a href="#">Thẻ Tín Dụng</a></li>
+                    <li><a href="#">Vay Cá Nhân</a></li>
+                    <li><a href="#">Vay Doanh Nghiệp</a></li>
+                    <li><a href="#">Ngân Hàng Số</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ Khách Hàng</h3>
+                <ul>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Biểu Phí Dịch Vụ</a></li>
+                    <li><a href="#">Mạng Lưới Chi Nhánh</a></li>
+                    <li><a href="#">Bảo Mật & An Toàn</a></li>
+                    <li><a href="#">Góp Ý Phản Hồi</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>Trụ Sở: 123 Đường Xa lộ Hà Nội, Quận 1, TP. Hồ Chí Minh</li>
+                    <li>Điện thoại: (028) 1234 5678</li>
+                    <li>Email: info@nganhangxyz.com.vn</li>
+                    <li>Hotline: 1900 1234</li>
+                </ul>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">yt</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ngân Hàng H. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        // Timeline Animation on Scroll
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        function checkScroll() {
+            timelineItems.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                if (itemTop < window.innerHeight * 0.8) {
+                    item.classList.add('show');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        checkScroll(); // Check on load
+    </script>
+</body>
+</html>

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Vụ - Ngân Hàng H</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .services-hero {
+            height: 400px;
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), url('/api/placeholder/1200/400') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .services-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .services-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .services-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #ffd700;
+            margin: 10px auto 0;
+        }
+        
+        /* Service Categories */
+        .categories-section {
+            padding: 5rem 5%;
+        }
+        
+        .categories-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .category-tab {
+            padding: 12px 25px;
+            background-color: #f0f0f0;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .category-tab:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .category-tab.active {
+            background-color: #005b96;
+            color: white;
+        }
+        
+        /* Service Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+        
+        .service-content {
+            padding: 20px;
+        }
+        
+        .service-content h3 {
+            color: #005b96;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .service-content p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .service-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #005b96;
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .service-btn:hover {
+            background-color: #ffd700;
+            color: #005b96;
+        }
+        
+        /* Featured Services */
+        .featured-section {
+            padding: 5rem 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .featured-service {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .featured-service:last-child {
+            margin-bottom: 0;
+        }
+        
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .featured-content h3 {
+            color: #005b96;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .featured-content p {
+            margin-bottom: 20px;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .features-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #005b96;
+            font-weight: bold;
+        }
+        
+        .featured-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #ffd700;
+            color: #005b96;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .featured-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Process Section */
+        .process-section {
+            padding: 5rem 5%;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .process-step {
+            flex: 1;
+            min-width: 220px;
+            max-width: 280px;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            top: 30%;
+            right: -15px;
+            font-size: 2rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: #005b96;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .process-step h3 {
+            color: #005b96;
+            margin-bottom: 15px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 5rem 5%;
+            background: linear-gradient(to right, #005b96, #007cb9);
+            color: white;
+        }
+        
+        .testimonials-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 10px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: #333;
+            text-align: center;
+        }
+        
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 3px solid #ffd700;
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            font-size: 50px;
+            line-height: 0;
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .testimonial-text::before {
+            top: 15px;
+            left: -15px;
+        }
+        
+        .testimonial-text::after {
+            bottom: -10px;
+            right: -15px;
+        }
+        
+        .testimonial-name {
+            font-weight: bold;
+            color: #005b96;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-position {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* FAQs Section */
+        .faqs-section {
+            padding: 5rem 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .faqs-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background-color: #005b96;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer-content {
+            padding: 20px;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            transition: max-height 0.5s ease;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-content p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .cta-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .services-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .featured-service {
+                flex-direction: column;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>H</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="services-hero">
+        <div class="services-hero-content">
+            <h1>Dịch Vụ Ngân Hàng</h1>
+            <p>Khám phá danh mục dịch vụ đa dạng và giải pháp tài chính toàn diện của chúng tôi</p>
+        </div>
+    </section>
+    
+    <!-- Service Categories -->
+    <section class="categories-section">
+        <div class="section-title">
+            <h2>Danh Mục Dịch Vụ</h2>
+        </div>
+        
+        <div class="categories-tabs">
+            <div class="category-tab active">Tất Cả</div>
+            <div class="category-tab">Cá Nhân</div>
+            <div class="category-tab">Doanh Nghiệp</div>
+            <div class="category-tab">Tài Khoản & Tiết Kiệm</div>
+            <div class="category-tab">Vay Vốn</div>
+            <div class="category-tab">Thẻ</div>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="https://trainingindustry.com/content/uploads/2021/03/Customer-Service-Training-for-Your-Bank-4.5.21.jpg" alt="Tài Khoản Thanh Toán">
+                </div>
+                <div class="service-content">
+                    <h3>Tài Khoản Thanh Toán</h3>
+                    <p>Tài khoản linh hoạt với nhiều tiện ích, miễn phí chuyển khoản và quản lý trực tuyến 24/7.</p>
+                    <a href="#" class="service-btn">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="https://trainingindustry.com/content/uploads/2021/03/Customer-Service-Training-for-Your-Bank-4.5.21.jpg" alt="Tiết Kiệm Trực Tuyến">
+                </div>
+                <div class="service-content">
+                    <h3>Tiết Kiệm Trực Tuyến</h3>
+                    <p>Gửi tiết kiệm online với lãi suất cạnh tranh, linh hoạt kỳ hạn và rút tiền bất kỳ lúc nào.</p>
+                    <a href="#" class="service-btn">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="https://trainingindustry.com/content/uploads/2021/03/Customer-Service-Training-for-Your-Bank-4.5.21.jpg" alt="Vay Mua Nhà">
+                </div>
+                <div class="service-content">
+                    <h3>Vay Mua Nhà</h3>
+                    <p>Giải pháp tài chính toàn diện giúp bạn hiện thực hóa giấc mơ sở hữu ngôi nhà lý tưởng.</p>
+                    <a href="#" class="service-btn">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="https://positivethinking.tech/wp-content/uploads/2020/09/Banking_Financial_Services_Challenges_Solutions_Positive_Thinking_Company-1-1024x680.png" alt="Thẻ Tín Dụng">
+                </div>
+                <div class="service-content">
+                    <h3>Thẻ Tín Dụng</h3>
+                    <p>Thanh toán linh hoạt với hạn mức cao, tích lũy điểm thưởng và ưu đãi độc quyền tại các đối tác.</p>
+                    <a href="#" class="service-btn">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="https://positivethinking.tech/wp-content/uploads/2020/09/Banking_Financial_Services_Challenges_Solutions_Positive_Thinking_Company-1-1024x680.png" alt="Mobile Banking">
+                </div>
+                <div class="service-content">
+                    <h3>Mobile Banking</h3>
+                    <p>Giải pháp ngân hàng toàn diện trên điện thoại, giao dịch mọi lúc mọi nơi với bảo mật cao.</p>
+                    <a href="#" class="service-btn">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="https://positivethinking.tech/wp-content/uploads/2020/09/Banking_Financial_Services_Challenges_Solutions_Positive_Thinking_Company-1-1024x680.png" alt="Vay Kinh Doanh">
+                </div>
+                <div class="service-content">
+                    <h3>Vay Kinh Doanh</h3>
+                    <p>Giải pháp tài chính đa dạng cho doanh nghiệp với thủ tục đơn giản, giải ngân nhanh chóng.</p>
+                    <a href="#" class="service-btn">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Services -->
+    <section class="featured-section">
+        <div class="section-title">
+            <h2>Dịch Vụ Nổi Bật</h2>
+        </div>
+        
+        <div class="featured-service">
+            <div class="featured-image">
+                <img src="https://cdn.sanity.io/images/ordgikwe/production/109f6d58b9590d4f8b2cc9a94aa97331e8d08087-1600x1200.jpg?w=1600&h=1200&auto=format" alt="Mobile Banking App">
+            </div>
+            
+            <div class="featured-content">
+                <h3>XYZ Mobile Banking</h3>
+                <p>Ứng dụng ngân hàng di động thế hệ mới, mang đến trải nghiệm tài chính toàn diện, thuận tiện và bảo mật.</p>
+                
+                <ul class="features-list">
+                    <li>Chuyển tiền nhanh chóng 24/7 không phí</li>
+                    <li>Thanh toán hóa đơn và nạp tiền các dịch vụ</li>
+                    <li>Gửi tiết kiệm trực tuyến với lãi suất ưu đãi</li>
+                    <li>Quản lý thẻ và tài khoản mọi lúc mọi nơi</li>
+                    <li>Bảo mật sinh trắc học và xác thực đa lớp</li>
+                </ul>
+                
+                <a href="#" class="featured-btn">Tải Ứng Dụng</a>
+            </div>
+        </div>
+        
+        <div class="featured-service">
+            <div class="featured-content">
+                <h3>Thẻ Tín Dụng Privilege</h3>
+                <p>Thẻ tín dụng cao cấp được thiết kế dành riêng cho tầng lớp tinh hoa, với đặc quyền độc đáo và dịch vụ chăm sóc 24/7.</p>
+                
+                <ul class="features-list">
+                    <li>Hạn mức tín dụng lên đến 2 tỷ đồng</li>
+                    <li>Truy cập miễn phí phòng chờ sân bay quốc tế</li>
+                    <li>Ưu đãi đặc biệt tại các khách sạn 5 sao</li>
+                    <li>Dịch vụ concierge toàn cầu</li>
+                    <li>Bảo hiểm du lịch và mua sắm quốc tế</li>
+                </ul>
+                
+                <a href="#" class="featured-btn">Đăng Ký Ngay</a>
+            </div>
+            
+            <div class="featured-image">
+                <img src="https://stwwwpritnh01.blob.core.windows.net/assets/assets/Mobile_Banking_Apps_Transforming_the_Financial_Experience_Capa_3a2879f415.png" alt="Thẻ tín dụng cao cấp">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="section-title">
+            <h2>Quy Trình Đăng Ký</h2>
+        </div>
+        
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>Lựa Chọn Dịch Vụ</h3>
+                <p>Tìm hiểu và lựa chọn dịch vụ phù hợp với nhu cầu tài chính của bạn.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>Điền Thông Tin</h3>
+                <p>Hoàn thành mẫu đăng ký trực tuyến hoặc tại chi nhánh gần nhất.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>Xác Thực</h3>
+                <p>Xác thực thông tin và hoàn thiện hồ sơ theo yêu cầu.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3>Phê Duyệt</h3>
+                <p>Đơn đăng ký của bạn sẽ được xử lý và phê duyệt nhanh chóng.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">5</div>
+                <h3>Kích Hoạt</h3>
+                <p>Kích hoạt và bắt đầu sử dụng dịch vụ với sự hỗ trợ từ chúng tôi.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="section-title">
+            <h2>Khách Hàng Nói Gì Về Chúng Tôi</h2>
+        </div>
+        
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <div class="testimonial-avatar">
+                    <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Khách hàng">
+                </div>
+                <div class="testimonial-text">
+                                        Dịch vụ ngân hàng số của XYZ thật sự tuyệt vời! Giao dịch nhanh chóng, tiện lợi và đội ngũ hỗ trợ rất nhiệt tình.
+                </div>
+                <div class="testimonial-name">Nguyễn Văn An</div>
+                <div class="testimonial-position">Doanh nhân</div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-avatar">
+                    <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Khách hàng">
+                </div>
+                <div class="testimonial-text">
+                    Tôi rất hài lòng với thẻ tín dụng Privilege. Ưu đãi vượt trội và dịch vụ chăm sóc khách hàng xuất sắc!
+                </div>
+                <div class="testimonial-name">Trần Thị Mai</div>
+                <div class="testimonial-position">Nhân viên văn phòng</div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-avatar">
+                    <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Khách hàng">
+                </div>
+                <div class="testimonial-text">
+                    Vay vốn kinh doanh tại XYZ giúp doanh nghiệp tôi mở rộng quy mô dễ dàng. Thủ tục nhanh gọn, lãi suất hợp lý.
+                </div>
+                <div class="testimonial-name">Lê Hoàng Nam</div>
+                <div class="testimonial-position">Chủ doanh nghiệp</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQs Section -->
+    <section class="faqs-section">
+        <div class="section-title">
+            <h2>Câu Hỏi Thường Gặp</h2>
+        </div>
+        
+        <div class="faqs-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    Làm thế nào để đăng ký tài khoản ngân hàng trực tuyến?
+                    <span></span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Bạn có thể đăng ký trực tuyến qua ứng dụng XYZ Mobile Banking hoặc đến chi nhánh gần nhất với CMND/CCCD và điền thông tin theo hướng dẫn.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Tôi có thể rút tiền tiết kiệm trước hạn không?
+                    <span></span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Có, bạn có thể rút tiền trước hạn với các gói tiết kiệm linh hoạt. Tuy nhiên, lãi suất có thể được điều chỉnh theo quy định hiện hành.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Làm sao để kiểm tra hạn mức thẻ tín dụng?
+                    <span></span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Bạn có thể kiểm tra qua ứng dụng H Mobile Banking, gọi hotline 1900-XXXX hoặc đến quầy giao dịch của Ngân hàng XYZ.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Trải Nghiệm Dịch Vụ Ngân Hàng Tốt Nhất</h2>
+            <p>Hãy để Ngân hàng H đồng hành cùng bạn trên hành trình tài chính với các giải pháp hiện đại và đáng tin cậy.</p>
+            <a href="#" class="cta-btn">Bắt Đầu Ngay</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Về Chúng Tôi</h3>
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Tầm nhìn & Sứ mệnh</a></li>
+                    <li><a href="#">Lịch sử phát triển</a></li>
+                    <li><a href="#">Đội ngũ lãnh đạo</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài khoản & Tiết kiệm</a></li>
+                    <li><a href="#">Vay vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Ngân hàng số</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                    <li><a href="#">Tìm chi nhánh/ATM</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Kết Nối Với Chúng Tôi</h3>
+                <p>Email: hotro@nganhangh.vn</p>
+                <p>Hotline: 1900-XXXX</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">F</a>
+                    <a href="#" class="social-link">T</a>
+                    <a href="#" class="social-link">I</a>
+                    <a href="#" class="social-link">Y</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ngân Hàng H. Bảo lưu mọi quyền.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Category tabs
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Add filtering logic here if needed
+            });
+        });
+    </script>
+</body>
+</html>
