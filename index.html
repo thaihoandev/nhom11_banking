@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngân Hàng H - Giải Pháp Tài Chính Toàn Diện</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 500px;
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), url('/api/placeholder/1200/500') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .cta-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 5rem 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #ffd700;
+            margin: 10px auto 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-icon {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e6f2ff;
+            font-size: 2.5rem;
+            color: #005b96;
+        }
+        
+        .service-content {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .service-content h3 {
+            margin-bottom: 10px;
+            color: #005b96;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+        }
+        
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .features-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .features-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .features-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .feature-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            background-color: #e6f2ff;
+            color: #005b96;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .feature-text h3 {
+            color: #005b96;
+            margin-bottom: 5px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 5%;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 60px;
+            color: #e6f2ff;
+            font-family: Georgia, serif;
+            line-height: 0.8;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: #005b96;
+            margin-bottom: 5px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 5%;
+            background: linear-gradient(to right, #005b96, #007cb9);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-content p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .secondary-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .secondary-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>H</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Giải Pháp Tài Chính Toàn Diện</h1>
+            <p>Tạo dựng tương lai tài chính vững mạnh cùng Ngân Hàng XYZ với các sản phẩm và dịch vụ đa dạng, linh hoạt, phù hợp với mọi nhu cầu.</p>
+            <a href="#" class="cta-btn">Mở Tài Khoản Ngay</a>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services">
+        <div class="section-title">
+            <h2>Dịch Vụ Của Chúng Tôi</h2>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <div>💰</div>
+                </div>
+                <div class="service-content">
+                    <h3>Tài Khoản & Tiết Kiệm</h3>
+                    <p>Đa dạng loại tài khoản với lãi suất hấp dẫn, giúp bạn tối ưu hóa quản lý tài chính cá nhân.</p>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <div>💳</div>
+                </div>
+                <div class="service-content">
+                    <h3>Thẻ Tín Dụng</h3>
+                    <p>Thanh toán linh hoạt với nhiều ưu đãi hấp dẫn từ các đối tác trên toàn cầu.</p>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <div>🏠</div>
+                </div>
+                <div class="service-content">
+                    <h3>Vay Mua Nhà</h3>
+                    <p>Hiện thực hóa giấc mơ sở hữu nhà với lãi suất ưu đãi và thời hạn vay linh hoạt.</p>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <div>📱</div>
+                </div>
+                <div class="service-content">
+                    <h3>Mobile Banking</h3>
+                    <p>Quản lý tài chính mọi lúc mọi nơi với ứng dụng ngân hàng hiện đại và an toàn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>Tại Sao Chọn Chúng Tôi</h2>
+        </div>
+        
+        <div class="features-container">
+            <div class="features-image">
+                <img src="https://www.hlbank.com.vn/content/dam/vn-global/images/official_image/personal/blog/14.1.png" alt="Ngân hàng số hiện đại">
+            </div>
+            
+            <div class="features-content">
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-text">
+                        <h3>An Toàn & Bảo Mật</h3>
+                        <p>Hệ thống bảo mật đa lớp, đảm bảo an toàn tuyệt đối cho giao dịch và thông tin cá nhân.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">
+                        <h3>Giao Dịch Nhanh Chóng</h3>
+                        <p>Thực hiện mọi giao dịch trong vài giây với hệ thống xử lý tức thời.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">💼</div>
+                    <div class="feature-text">
+                        <h3>Đội Ngũ Chuyên Nghiệp</h3>
+                        <p>Đội ngũ tư vấn viên tài chính giàu kinh nghiệm, sẵn sàng hỗ trợ 24/7.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-text">
+                        <h3>Mạng Lưới Toàn Cầu</h3>
+                        <p>Kết nối với hơn 100 ngân hàng đối tác trên khắp thế giới, thuận tiện cho mọi giao dịch quốc tế.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>Khách Hàng Nói Gì Về Chúng Tôi</h2>
+        </div>
+        
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    <p>Tôi đã sử dụng dịch vụ của Ngân Hàng XYZ được 5 năm và hoàn toàn hài lòng. Dịch vụ khách hàng tuyệt vời và ứng dụng mobile banking rất dễ sử dụng.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Nguyễn Văn A">
+                    </div>
+                    <div class="author-info">
+                        <h4>Nguyễn Văn A</h4>
+                        <p>Khách hàng cá nhân</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    <p>Ngân Hàng XYZ đã hỗ trợ doanh nghiệp chúng tôi rất nhiều trong việc mở rộng thị trường. Các gói vay doanh nghiệp linh hoạt và thủ tục nhanh chóng.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Trần Thị B">
+                    </div>
+                    <div class="author-info">
+                        <h4>Trần Thị B</h4>
+                        <p>CEO Công ty ABC</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    <p>Vay mua nhà với Ngân Hàng XYZ là quyết định sáng suốt nhất của tôi. Lãi suất thấp, thủ tục đơn giản và nhân viên tư vấn rất nhiệt tình.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <img src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg" alt="Lê Văn C">
+                    </div>
+                    <div class="author-info">
+                        <h4>Lê Văn C</h4>
+                        <p>Kỹ sư IT</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Bắt Đầu Hành Trình Tài Chính Của Bạn Ngay Hôm Nay</h2>
+            <p>Đăng ký tài khoản chỉ trong vài phút và trải nghiệm ngay các dịch vụ tài chính hiện đại.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn">Mở Tài Khoản</a>
+                <a href="#" class="secondary-btn">Liên Hệ Tư Vấn</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Ngân Hàng XYZ</h3>
+                <p>Đối tác tài chính đáng tin cậy, đồng hành cùng bạn trên mọi hành trình.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">y</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
+                    <li><a href="#">Thẻ Tín Dụng</a></li>
+                    <li><a href="#">Vay Cá Nhân</a></li>
+                    <li><a href="#">Vay Mua Nhà</a></li>
+                    <li><a href="#">Bảo Hiểm</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Biểu Phí</a></li>
+                    <li><a href="#">An Toàn & Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>123 Đường Xa lộ Hà Nội, TP. HCM</li>
+                    <li>Hotline: 1900 xxxx</li>
+                    <li>Email: info@nganhangh.com</li>
+                    <li>Giờ làm việc: 8:00 - 17:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ngân Hàng XYZ. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            
+            const spans = document.querySelectorAll('.menu-toggle span');
+            spans[0].classList.toggle('rotate-45');
+            spans[1].classList.toggle('opacity-0');
+            spans[2].classList.toggle('rotate-negative-45');
+            
+            if (spans[0].classList.contains('rotate-45')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
