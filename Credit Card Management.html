@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Thẻ Tín Dụng - Ngân Hàng XYZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Page Banner */
+        .page-banner {
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), url('/api/placeholder/1200/300') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .page-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-banner p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        /* Credit Cards Section */
+        .section {
+            padding: 4rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #ffd700;
+            margin: 10px auto 0;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card-item {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .card-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .card-item:hover .card-image img {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            color: #005b96;
+            margin-bottom: 15px;
+        }
+        
+        .card-features {
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: #005b96;
+            font-size: 14px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #005b96;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #004a7c;
+            transform: translateY(-2px);
+        }
+        
+        /* Dashboard Section */
+        .dashboard {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-header {
+            background-color: #005b96;
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-title {
+            font-size: 1.4rem;
+        }
+        
+        .dashboard-welcome {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .dashboard-content {
+            padding: 25px;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background: linear-gradient(135deg, #005b96, #003c63);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background-color: rgba(255, 215, 0, 0.8);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .card-details {
+            margin-top: 15px;
+        }
+        
+        .card-number {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        
+        .card-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .card-holder, .card-expiry {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .card-name, .card-date {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .card-logo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .card-logo span {
+            color: #ffd700;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #005b96;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #005b96;
+        }
+        
+        .transactions {
+            margin-top: 30px;
+        }
+        
+        .transactions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .transactions-title {
+            font-size: 1.2rem;
+            color: #005b96;
+        }
+        
+        .view-all {
+            color: #005b96;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .transactions-table th,
+        .transactions-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transactions-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .transactions-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .transactions-table tr:hover td {
+            background-color: #f5f5f5;
+        }
+        
+        .amount {
+            font-weight: 600;
+        }
+        
+        .debit {
+            color: #dc3545;
+        }
+        
+        .credit {
+            color: #28a745;
+        }
+        
+        /* Credit Card Benefits */
+        .benefits {
+            background-color: #f0f7ff;
+        }
+        
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: #005b96;
+        }
+        
+        .benefit-title {
+            font-size: 1.2rem;
+            color: #005b96;
+            margin-bottom: 15px;
+        }
+        
+        /* Apply Now Section */
+        .apply-section {
+            background: linear-gradient(rgba(0, 91, 150, 0.9), rgba(0, 91, 150, 0.9)), url('/api/placeholder/1200/400') no-repeat center center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 5rem 5%;
+        }
+        
+        .apply-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .apply-section p {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background-color: #ffd700;
+            color: #005b96;
+            display: inline-block;
+            width: auto;
+        }
+        
+        .btn-large:hover {
+            background-color: #ffcc00;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .page-banner h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .transactions-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <h1>Quản Lý Thẻ Tín Dụng</h1>
+        <p>Kiểm soát toàn diện thẻ tín dụng của bạn với các tính năng quản lý thông minh và an toàn từ Ngân hàng XYZ.</p>
+    </section>
+    
+    <!-- Credit Cards Dashboard -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Bảng Điều Khiển Thẻ Tín Dụng</h2>
+        </div>
+        
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div>
+                    <div class="dashboard-title">Quản Lý Thẻ Tín Dụng</div>
+                    <div class="dashboard-welcome">Xin chào, Nguyễn Văn A</div>
+                </div>
+                <div class="dashboard-date">Chủ Nhật, 23/03/2025</div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-cards">
+                    <div class="dashboard-card">
+                        <div class="card-chip"></div>
+                        <div class="card-type">Platinum Card</div>
+                        <div class="card-details">
+                            <div class="card-number">**** **** **** 5678</div>
+                            <div class="card-info">
+                                <div>
+                                    <div class="card-holder">CHỦ THẺ</div>
+                                    <div class="card-name">NGUYEN VAN A</div>
+                                </div>
+                                <div>
+                                    <div class="card-expiry">HẠN SỬ DỤNG</div>
+                                    <div class="card-date">08/28</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-logo">XYZ<span>bank</span></div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-chip"></div>
+                        <div class="card-type">Gold Card</div>
+                        <div class="card-details">
+                            <div class="card-number">**** **** **** 1234</div>
+                            <div class="card-info">
+                                <div>
+                                    <div class="card-holder">CHỦ THẺ</div>
+                                    <div class="card-name">NGUYEN VAN A</div>
+                                </div>
+                                <div>
+                                    <div class="card-expiry">HẠN SỬ DỤNG</div>
+                                    <div class="card-date">05/27</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-logo">XYZ<span>bank</span></div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-title">Hạn mức tín dụng</div>
+                        <div class="stat-value">50.000.000 VNĐ</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Dư nợ hiện tại</div>
+                        <div class="stat-value">8.250.000 VNĐ</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Hạn mức còn lại</div>
+                        <div class="stat-value">41.750.000 VNĐ</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Thanh toán tối thiểu</div>
+                        <div class="stat-value">825.000 VNĐ</div>
+                    </div>
+                </div>
+                
+                <div class="transactions">
+                    <div class="transactions-header">
+                        <div class="transactions-title">Giao dịch gần đây</div>
+                        <a href="#" class="view-all">Xem tất cả</a>
+                    </div>
+                    
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Mô tả</th>
+                                <th>Loại</th>
+                                <th>Số tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>22/03/2025</td>
+                                <td>Nhà hàng ABC</td>
+                                <td>Ẩm thực</td>
+                                <td class="amount debit">-750.000 VNĐ</td>
+                            </tr>
+                            <tr>
+                                <td>20/03/2025</td>
+                                <td>Thanh toán hóa đơn thẻ</td>
+                                <td>Thanh toán</td>
+                                <td class="amount credit">+2.000.000 VNĐ</td>
+                            </tr>
+                            <tr>
+                                <td>18/03/2025</td>
+                                <td>Siêu thị XYZ</td>
+                                <td>Mua sắm</td>
+                                <td class="amount debit">-1.250.000 VNĐ</td>
+                            </tr>
+                            <tr>
+                                <td>15/03/2025</td>
+                                <td>Cửa hàng điện tử DEF</td>
+                                <td>Điện tử</td>
+                                <td class="amount debit">-4.500.000 VNĐ</td>
+                            </tr>
+                            <tr>
+                                <td>10/03/2025</td>
+                                <td>Hoàn tiền mua sắm</td>
+                                <td>Hoàn tiền</td>
+                                <td class="amount credit">+250.000 VNĐ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="display: flex; gap: 20px; margin-top: 30px;">
+                    <a href="#" class="btn">Thanh Toán Dư Nợ</a>
+                    <a href="#" class="btn">Tăng Hạn Mức</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Credit Card Options -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Thẻ Tín Dụng Của Chúng Tôi</h2>
+        </div>
+        
+        <div class="cards-container">
+            <div class="card-item">
+                <div class="card-image">
+                    <img src="/api/placeholder/400/200" alt="Thẻ Platinum">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Thẻ Tín Dụng Platinum</h3>
+                    <p>Trải nghiệm đặc quyền cao cấp với thẻ Platinum. Không giới hạn cho phong cách sống sang trọng của bạn.</p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Hạn mức tín dụng lên đến 500 triệu VNĐ</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Hoàn tiền không giới hạn lên đến 2%</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Bảo hiểm du lịch toàn cầu lên đến 10 tỷ VNĐ</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Phòng chờ sân bay miễn phí không giới hạn</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn">Đăng Ký Ngay</a>
+                </div>
+            </div>
+            
+            <div class="card-item">
+                <div class="card-image">
+                    <img src="/api/placeholder/400/200" alt="Thẻ Gold">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Thẻ Tín Dụng Gold</h3>
+                    <p>Tối ưu trải nghiệm chi tiêu với thẻ Gold. Lựa chọn hoàn hảo cho phong cách sống năng động.</p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Hạn mức tín dụng lên đến 200 triệu VNĐ</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Hoàn tiền lên đến 1.5% cho mọi giao dịch</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Bảo hiểm du lịch toàn cầu lên đến 5 tỷ VNĐ</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Ưu đãi đặc biệt tại hàng nghìn nhà hàng</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn">Đăng Ký Ngay</a>
+                </div>
+            </div>
+            
+            <div class="card-item">
+                <div class="card-image">
+                    <img src="/api/placeholder/400/200" alt="Thẻ Titanium">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Thẻ Tín Dụng Titanium</h3>
+                    <p>Khám phá linh hoạt trong chi tiêu với thẻ Titanium. Đồng hành cùng bạn trong mọi nhu cầu tài chính.</p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Hạn mức tín dụng lên đến 100 triệu VNĐ</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Hoàn tiền 1% cho mọi giao dịch</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Bảo hiểm du lịch toàn cầu lên đến 2 tỷ VNĐ</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Miễn phí chuyển đổi trả góp 0%</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn">Đăng Ký Ngay</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Credit Card Benefits -->
+<section class="section benefits">
+    <div class="section-title">
+        <h2>Đặc Quyền Thẻ Tín Dụng</h2>
+    </div>
+    
+    <div class="benefits-container">
+        <div class="benefit-item">
+            <div class="benefit-icon">💰</div>
+            <h3 class="benefit-title">Hoàn Tiền Hấp Dẫn</h3>
+            <p>Tận hưởng ưu đãi hoàn tiền lên đến 2% cho mọi giao dịch mua sắm, ăn uống và giải trí sử dụng thẻ tín dụng XYZ.</p>
+        </div>
+        
+        <div class="benefit-item">
+            <div class="benefit-icon">✈️</div>
+            <h3 class="benefit-title">Đặc Quyền Du Lịch</h3>
+            <p>Truy cập miễn phí phòng chờ VIP tại sân bay, bảo hiểm du lịch toàn cầu và ưu đãi đặc biệt tại các khách sạn cao cấp.</p>
+        </div>
+        
+        <div class="benefit-item">
+            <div class="benefit-icon">🛒</div>
+            <h3 class="benefit-title">Ưu Đãi Mua Sắm</h3>
+            <p>Giảm giá độc quyền tại hàng nghìn đối tác mua sắm, ẩm thực và giải trí trên toàn quốc khi thanh toán bằng thẻ XYZ.</p>
+        </div>
+        
+        <div class="benefit-item">
+            <div class="benefit-icon">🔒</div>
+            <h3 class="benefit-title">Bảo Mật Tối Ưu</h3>
+            <p>An tâm với hệ thống bảo mật tiên tiến, thông báo giao dịch thời gian thực và bảo hiểm gian lận thẻ lên đến 100%.</p>
+        </div>
+        
+        <div class="benefit-item">
+            <div class="benefit-icon">📱</div>
+            <h3 class="benefit-title">Quản Lý Thông Minh</h3>
+            <p>Kiểm soát thẻ tín dụng mọi lúc, mọi nơi với ứng dụng di động hiện đại và đầy đủ tính năng.</p>
+        </div>
+        
+        <div class="benefit-item">
+            <div class="benefit-icon">🎁</div>
+            <h3 class="benefit-title">Đổi Điểm Thưởng</h3>
+            <p>Tích lũy điểm thưởng với mỗi giao dịch và đổi lấy quà tặng hấp dẫn, phiếu mua hàng hoặc dặm bay.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Apply Now Section -->
+<section class="apply-section">
+    <h2>Đăng Ký Thẻ Tín Dụng Ngay Hôm Nay</h2>
+    <p>Chỉ mất 5 phút để đăng ký online và nhận kết quả phê duyệt nhanh chóng trong vòng 24 giờ. Bắt đầu tận hưởng những đặc quyền tuyệt vời từ thẻ tín dụng Ngân hàng XYZ.</p>
+    <a href="#" class="btn btn-large">Đăng Ký Ngay</a>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Về Chúng Tôi</h3>
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Tin tức & Sự kiện</a></li>
+                <li><a href="#">Quan hệ cổ đông</a></li>
+                <li><a href="#">Cơ hội nghề nghiệp</a></li>
+                <li><a href="#">Trách nhiệm xã hội</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Sản Phẩm & Dịch Vụ</h3>
+            <ul>
+                <li><a href="#">Tài khoản & Tiết kiệm</a></li>
+                <li><a href="#">Thẻ tín dụng</a></li>
+                <li><a href="#">Thẻ ghi nợ</a></li>
+                <li><a href="#">Vay cá nhân</a></li>
+                <li><a href="#">Vay mua nhà</a></li>
+                <li><a href="#">Vay mua xe</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Hỗ Trợ</h3>
+            <ul>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Biểu phí dịch vụ</a></li>
+                <li><a href="#">Lãi suất</a></li>
+                <li><a href="#">Mạng lưới ATM</a></li>
+                <li><a href="#">Mạng lưới chi nhánh</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>Liên Hệ Với Chúng Tôi</h3>
+            <p>Tổng đài: 1900 xxxx</p>
+            <p>Email: info@xyzbank.com.vn</p>
+            <p>Trụ sở chính: 123 Đường ABC, Quận 1, TP.HCM</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">F</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">Y</a>
+                <a href="#" class="social-link">I</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 Ngân hàng XYZ. Tất cả quyền được bảo lưu.</p>
+    </div>
+</footer>
+
+<script>
+    // Mobile Navigation Toggle
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        document.querySelector('nav').classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const nav = document.querySelector('nav');
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        if (!nav.contains(event.target) && !menuToggle.contains(event.target) && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>
