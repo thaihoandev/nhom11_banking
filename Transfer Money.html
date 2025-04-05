@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyển Tiền - Ngân Hàng XYZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .page-title {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .page-title h1 {
+            color: #005b96;
+            font-size: 2rem;
+        }
+        
+        /* Transfer Section */
+        .transfer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .transfer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .transfer-form-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .transfer-info-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .section-title {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: #005b96;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .form-group select:focus,
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #005b96;
+            box-shadow: 0 0 0 2px rgba(0, 91, 150, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #005b96;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #004a7c;
+            transform: translateY(-2px);
+        }
+        
+        .account-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .account-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .account-card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .account-card-body {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #005b96;
+        }
+        
+        .account-card-footer {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .saved-beneficiaries {
+            margin-top: 30px;
+        }
+        
+        .beneficiary-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .beneficiary-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .beneficiary-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #005b96;
+        }
+        
+        .beneficiary-info {
+            flex: 1;
+        }
+        
+        .beneficiary-info h4 {
+            margin-bottom: 3px;
+        }
+        
+        .beneficiary-info p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .transfer-steps {
+            margin-top: 30px;
+        }
+        
+        .step-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background-color: #005b96;
+            color: white;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h4 {
+            margin-bottom: 5px;
+        }
+        
+        .transfer-tips {
+            margin-top: 30px;
+            background-color: #e6f2ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #005b96;
+        }
+        
+        .transfer-tips h4 {
+            margin-bottom: 10px;
+            color: #005b96;
+        }
+        
+        .transfer-tips ul {
+            padding-left: 20px;
+        }
+        
+        .transfer-tips li {
+            margin-bottom: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-title">
+            <h1>Chuyển Tiền</h1>
+        </div>
+        
+        <div class="transfer-container">
+            <!-- Transfer Form Section -->
+            <div class="transfer-form-section">
+                <h2 class="section-title">Thực Hiện Giao Dịch</h2>
+                
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="from-account">Tài Khoản Nguồn</label>
+                        <select id="from-account" name="from-account" required>
+                            <option value="">Chọn tài khoản</option>
+                            <option value="account1">Tài khoản thanh toán - 1234567890 (25.000.000 VND)</option>
+                            <option value="account2">Tài khoản tiết kiệm - 0987654321 (150.000.000 VND)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transfer-type">Loại Chuyển Khoản</label>
+                        <select id="transfer-type" name="transfer-type" required>
+                            <option value="">Chọn loại chuyển khoản</option>
+                            <option value="internal">Chuyển khoản nội bộ XYZ Bank</option>
+                            <option value="interbank">Chuyển khoản liên ngân hàng</option>
+                            <option value="fast">Chuyển tiền nhanh qua số điện thoại/CCCD</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="beneficiary-account">Số Tài Khoản Người Nhận</label>
+                        <input type="text" id="beneficiary-account" name="beneficiary-account" placeholder="Nhập số tài khoản người nhận" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="beneficiary-name">Tên Người Nhận</label>
+                        <input type="text" id="beneficiary-name" name="beneficiary-name" placeholder="Tên người nhận sẽ tự động hiển thị sau khi xác thực" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Số Tiền Chuyển (VND)</label>
+                        <input type="number" id="amount" name="amount" placeholder="Nhập số tiền cần chuyển" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Nội Dung Chuyển Tiền</label>
+                        <textarea id="description" name="description" placeholder="Nhập nội dung chuyển tiền"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="schedule">Thời Gian Thực Hiện</label>
+                        <select id="schedule" name="schedule">
+                            <option value="now">Thực hiện ngay</option>
+                            <option value="schedule">Đặt lịch chuyển tiền</option>
+                            <option value="recurring">Chuyển tiền định kỳ</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Tiếp Tục</button>
+                </form>
+            </div>
+            
+            <!-- Transfer Info Section -->
+            <div class="transfer-info-section">
+                <h2 class="section-title">Tài Khoản Của Tôi</h2>
+                
+                <div class="account-card">
+                    <div class="account-card-header">
+                        <span>Tài khoản thanh toán</span>
+                        <span>VND</span>
+                    </div>
+                    <div class="account-card-body">25.000.000</div>
+                    <div class="account-card-footer">Số tài khoản: 1234567890</div>
+                </div>
+                
+                <div class="account-card">
+                    <div class="account-card-header">
+                        <span>Tài khoản tiết kiệm</span>
+                        <span>VND</span>
+                    </div>
+                    <div class="account-card-body">150.000.000</div>
+                    <div class="account-card-footer">Số tài khoản: 0987654321</div>
+                </div>
+                
+                <div class="saved-beneficiaries">
+                    <h3 class="section-title">Người Nhận Gần Đây</h3>
+                    
+                    <div class="beneficiary-item">
+                        <div class="beneficiary-icon">NT</div>
+                        <div class="beneficiary-info">
+                            <h4>Nguyễn Thị Thanh</h4>
+                            <p>XYZ Bank - 9876543210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="beneficiary-item">
+                        <div class="beneficiary-icon">HL</div>
+                        <div class="beneficiary-info">
+                            <h4>Hoàng Văn Lâm</h4>
+                            <p>VCB - 0123456789</p>
+                        </div>
+                    </div>
+                    
+                    <div class="beneficiary-item">
+                        <div class="beneficiary-icon">TC</div>
+                        <div class="beneficiary-info">
+                            <h4>Trần Văn Cường</h4>
+                            <p>XYZ Bank - 5678901234</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="transfer-steps">
+                    <h3 class="section-title">Quy Trình Chuyển Tiền</h3>
+                    
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Nhập thông tin</h4>
+                            <p>Điền đầy đủ thông tin người nhận và số tiền cần chuyển</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Xác nhận giao dịch</h4>
+                            <p>Kiểm tra lại thông tin và xác nhận giao dịch</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Xác thực OTP</h4>
+                            <p>Nhập mã OTP được gửi về số điện thoại đăng ký</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Hoàn tất</h4>
+                            <p>Giao dịch được xử lý và bạn nhận thông báo kết quả</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="transfer-tips">
+                    <h4>Lưu ý an toàn</h4>
+                    <ul>
+                        <li>Luôn kiểm tra kỹ thông tin người nhận trước khi xác nhận chuyển tiền</li>
+                        <li>Không chia sẻ mã OTP với bất kỳ ai, kể cả nhân viên ngân hàng</li>
+                        <li>Đảm bảo đang truy cập trang web chính thức của Ngân Hàng XYZ</li>
+                        <li>Liên hệ ngay hotline 1900 xxxx nếu phát hiện giao dịch đáng ngờ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Ngân Hàng XYZ</h3>
+                <p>Đối tác tài chính đáng tin cậy, đồng hành cùng bạn trên mọi hành trình.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">y</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
+                    <li><a href="#">Thẻ Tín Dụng</a></li>
+                    <li><a href="#">Vay Cá Nhân</a></li>
+                    <li><a href="#">Vay Mua Nhà</a></li>
+                    <li><a href="#">Bảo Hiểm</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Biểu Phí</a></li>
+                    <li><a href="#">An Toàn & Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>123 Đường ABC, Quận XYZ, TP. HCM</li>
+                    <li>Hotline: 1900 xxxx</li>
+                    <li>Email: info@nganhangxyz.com</li>
+                    <li>Giờ làm việc: 8:00 - 17:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ngân Hàng XYZ. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            
+            const spans = document.querySelectorAll('.menu-toggle span');
+            spans[0].classList.toggle('rotate-45');
+            spans[1].classList.toggle('opacity-0');
+            spans[2].classList.toggle('rotate-negative-45');
+            
+            if (spans[0].classList.contains('rotate-45')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+        
+        // Account Verification Simulation
+        document.getElementById('beneficiary-account').addEventListener('blur', function() {
+            const accountNum = this.value.trim();
+            const nameField = document.getElementById('beneficiary-name');
+            
+            if (accountNum.length > 0) {
+                // Simulate server verification delay
+                setTimeout(() => {
+                    // This would be replaced with actual server verification
+                    if (accountNum === '9876543210') {
+                        nameField.value = 'Nguyễn Thị Thanh';
+                    } else if (accountNum === '0123456789') {
+                        nameField.value = 'Hoàng Văn Lâm';
+                    } else if (accountNum === '5678901234') {
+                        nameField.value = 'Trần Văn Cường';
+                    } else {
+                        nameField.value = 'Đang xác thực...';
+                        // Further simulation
+                        setTimeout(() => {
+                            nameField.value = 'Lê Văn Minh'; // Simulated name for any other account
+                        }, 1000);
+                    }
+                }, 500);
+            } else {
+                nameField.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
