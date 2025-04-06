@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Nhận Khoản Vay - Ngân Hàng XYZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #005b96;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Application form */
+        .application-form {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .application-form h2 {
+            font-size: 1.8rem;
+            color: #005b96;
+            margin-bottom: 0.5rem;
+        }
+        
+        .application-form p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .steps::after {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ddd;
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step.active .step-number {
+            background-color: #27ae60;
+        }
+        
+        .step.completed .step-number {
+            background-color: #27ae60;
+        }
+        
+        .step-title {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+        }
+        
+        .step.active .step-title {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .step.completed .step-title {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        
+        .form-section h3 {
+            font-size: 1.3rem;
+            color: #005b96;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .required::after {
+            content: ' *';
+            color: #e74c3c;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .form-col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 250px;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background-color: #005b96;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #007cb9;
+        }
+        
+        .btn-secondary {
+            background-color: #ddd;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ccc;
+        }
+        
+        .btn-success {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        /* Summary table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-table td {
+            padding: 12px 5px;
+        }
+        
+        .summary-table td:first-child {
+            font-weight: bold;
+            width: 40%;
+        }
+        
+        /* Terms container */
+        .terms-container {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #005b96;
+        }
+        
+        .terms-container h3 {
+            margin-bottom: 1rem;
+            color: #005b96;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .terms-container ol {
+            padding-left: 1.5rem;
+        }
+        
+        .terms-container li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkbox-container input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        /* Success section */
+        .success-icon {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .success-icon i {
+            font-size: 5rem;
+            color: #27ae60;
+        }
+        
+        .success-message {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .success-message h3 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: none;
+        }
+        
+        .loan-details {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+        }
+        
+        .loan-details h3 {
+            color: #005b96;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .next-steps {
+            background-color: #e8f4ff;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .next-steps h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+            border-bottom: none;
+        }
+        
+        .next-steps ol {
+            padding-left: 1.5rem;
+        }
+        
+        .next-steps li {
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .steps::after {
+                display: none;
+            }
+            
+            .step {
+                flex-direction: row;
+                margin-bottom: 1rem;
+            }
+            
+            .step-number {
+                margin-right: 1rem;
+                margin-bottom: 0;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="hero">
+            <h1>Đăng Ký Vay Vốn</h1>
+            <p>Chúng tôi cung cấp các giải pháp tài chính linh hoạt, đáp ứng mọi nhu cầu vay vốn với lãi suất ưu đãi và thủ tục đơn giản.</p>
+        </section>
+        
+        <section class="application-form">
+            <h2>Đăng Ký Vay Tiêu Dùng</h2>
+            <p>Điền thông tin của bạn để bắt đầu quy trình đăng ký</p>
+            
+            <div class="steps">
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title">Thông tin cá nhân</div>
+                </div>
+                
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title">Thông tin tài chính</div>
+                </div>
+                
+                <div class="step completed">
+                    <div class="step-number">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-title">Chi tiết khoản vay</div>
+                </div>
+                
+                <div class="step active">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Xác nhận</div>
+                </div>
+            </div>
+            
+            <form id="confirmation-form">
+                <div class="form-section">
+                    <h3>Xác Nhận Thông Tin</h3>
+                    
+                    <h4>Tóm tắt thông tin đăng ký</h4>
+                    <table class="summary-table">
+                        <tr>
+                            <td>Họ và tên</td>
+                            <td>Nguyễn Văn A</td>
+                        </tr>
+                        <tr>
+                            <td>Số CMND/CCCD</td>
+                            <td>0123456789</td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ</td>
+                            <td>123 Đường Lê Lợi, Quận 1, TP.HCM</td>
+                        </tr>
+                        <tr>
+                            <td>Số điện thoại</td>
+                            <td>0987654321</td>
+                        </tr>
+                        <tr>
+                            <td>Thu nhập hàng tháng</td>
+                            <td>15,000,000 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Số tiền vay</td>
+                            <td>50,000,000 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Thời hạn vay</td>
+                            <td>12 tháng</td>
+                        </tr>
+                        <tr>
+                            <td>Mục đích vay</td>
+                            <td>Chi phí học tập</td>
+                        </tr>
+                        <tr>
+                            <td>Khoản trả hàng tháng</td>
+                            <td>4,583,333 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Lãi suất</td>
+                            <td>12.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Tổng số tiền phải trả</td>
+                            <td>55,000,000 VNĐ</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="terms-container">
+                        <h3>Điều khoản và điều kiện</h3>
+                        <ol>
+                            <li>Bằng việc gửi đơn này, tôi/chúng tôi xác nhận rằng tất cả thông tin được cung cấp trong đơn đăng ký này là đúng sự thật và chính xác.</li>
+                            <li>Tôi/chúng tôi hiểu rằng việc cung cấp thông tin sai sự thật hoặc gây hiểu nhầm có thể dẫn đến việc từ chối đơn đăng ký và có thể bị truy tố theo quy định của pháp luật hiện hành.</li>
+                            <li>Tôi/chúng tôi đồng ý cho phép Ngân hàng XYZ tiến hành xác minh thông tin cá nhân và tài chính được cung cấp trong đơn đăng ký này.</li>
+                            <li>Tôi/chúng tôi đồng ý nhận các thông báo liên quan đến đơn đăng ký và khoản vay qua email hoặc tin nhắn SMS.</li>
+                            <li>Tôi/chúng tôi hiểu rằng việc phê duyệt khoản vay phụ thuộc vào đánh giá tín dụng và chính sách cho vay của Ngân hàng XYZ.</li>
+                            <li>Tôi/chúng tôi hiểu và đồng ý với các điều khoản liên quan đến phí trả trước, phí phạt và lãi suất của khoản vay này.</li>
+                            <li>Tôi/chúng tôi đã đọc, hiểu rõ và đồng ý với toàn bộ Điều khoản và Điều kiện sử dụng dịch vụ của Ngân hàng XYZ.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms-agree" required>
+                        <label for="terms-agree">Tôi đã đọc, hiểu rõ và đồng ý với các Điều khoản và Điều kiện trên.</label>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="back-btn">Quay lại</button>
+                    <button type="button" class="btn btn-success" id="submit-btn">Xác nhận và gửi đơn</button>
+                </div>
+            </form>
+            
+            <!-- Phần xác nhận thành công (sẽ hiển thị sau khi submit) -->
+            <div id="confirmation-success" style="display: none;">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                
+                <div class="success-message">
+                    <h3>Đơn đăng ký của bạn đã được gửi thành công!</h3>
+                    <p>Mã đơn hàng của bạn là: <strong>XYZ12345678</strong></p>
+                    <p>Chúng tôi sẽ xem xét đơn đăng ký của bạn và liên hệ trong vòng 24-48 giờ làm việc.</p>
+                </div>
+                
+                <div class="loan-details">
+                    <h3>Thông tin khoản vay</h3>
+                    <table class="summary-table">
+                        <tr>
+                            <td>Số tiền vay</td>
+                            <td>50,000,000 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Thời hạn vay</td>
+                            <td>12 tháng</td>
+                        </tr>
+                        <tr>
+                            <td>Khoản trả hàng tháng</td>
+                            <td>4,583,333 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Ngày trả góp hàng tháng</td>
+                            <td>Ngày 15 hàng tháng</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="next-steps">
+                    <h3>Các bước tiếp theo</h3>
+                    <ol>
+                        <li>Nhân viên ngân hàng sẽ liên hệ với bạn để xác nhận thông tin.</li>
+                        <li>Khi đơn đăng ký được phê duyệt, bạn sẽ nhận được thông báo qua SMS và email.</li>
+                        <li>Hãy mang theo CMND/CCCD gốc và các giấy tờ đã tải lên khi đến ngân hàng ký hợp đồng.</li>
+                        <li>Số tiền vay sẽ được chuyển vào tài khoản của bạn trong vòng 24 giờ sau khi ký hợp đồng.</li>
+                    </ol>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">Về trang chủ</button>
+                    <button type="button" class="btn btn-primary">In thông tin đơn hàng</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Ngân Hàng XYZ</h3>
+                <p>Đối tác tài chính đáng tin cậy, đồng hành cùng bạn trên mọi hành trình.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">y</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
+                    <li><a href="#">Thẻ Tín Dụng</a></li>
+                    <li><a href="#">Vay Cá Nhân</a></li>
+                    <li><a href="#">Vay Mua Nhà</a></li>
+                    <li><a href="#">Bảo Hiểm</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Biểu Phí</a></li>
+                    <li><a href="#">An Toàn & Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>123 Đường ABC, Quận XYZ, TP. HCM</li>
+                    <li>Hotline: 1900 xxxx</li>
+                    <li>Email: info@nganhangxyz.com</li>
+                    <li>Giờ làm việc: 8:00 - 17:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ngân Hàng XYZ. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            
+            const spans = document.querySelectorAll('.menu-toggle span');
+            spans[0].classList.toggle('rotate-45');
+            spans[1].classList.toggle('opacity-0');
+            spans[2].classList.toggle('rotate-negative-45');
+            
+            if (spans[0].classList.contains('rotate-45')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        
