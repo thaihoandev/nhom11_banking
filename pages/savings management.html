@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tiết Kiệm - Ngân Hàng XYZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .page-title {
+            color: #005b96;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .sidebar {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .account-summary {
+            margin-bottom: 2rem;
+        }
+        
+        .account-balance {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #005b96;
+            margin: 1rem 0;
+        }
+        
+        .menu-list {
+            list-style: none;
+        }
+        
+        .menu-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .menu-list li a {
+            display: block;
+            padding: 0.8rem;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .menu-list li a:hover, .menu-list li a.active {
+            background-color: #005b96;
+            color: #fff;
+        }
+        
+        .main-content {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .savings-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .savings-card {
+            background: linear-gradient(135deg, #005b96, #007cb9);
+            color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .savings-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .savings-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .savings-amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .savings-details {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .savings-details p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            margin-top: 1rem;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: #ffd700;
+            color: #005b96;
+        }
+        
+        .btn-primary:hover {
+            background-color: #ffcc00;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            color: #005b96;
+            margin: 2rem 0 1rem;
+        }
+        
+        .savings-offers {
+            background-color: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .offers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 1.5rem;
+        }
+        
+        .offer-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .offer-card h4 {
+            color: #005b96;
+            margin-bottom: 0.8rem;
+        }
+        
+        .interest-rate {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007cb9;
+            margin: 0.5rem 0;
+        }
+        
+        .create-new {
+            background-color: #005b96;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .create-new h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .transactions-list {
+            margin-top: 2rem;
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transaction-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .transaction-amount {
+            font-weight: bold;
+        }
+        
+        .deposit {
+            color: #28a745;
+        }
+        
+        .withdrawal {
+            color: #dc3545;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .login-btn {
+                display: inline-block;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Trang Chủ</a></li>
+                    <li><a href="#">Cá Nhân</a></li>
+                    <li><a href="#">Doanh Nghiệp</a></li>
+                    <li><a href="#">Vay Vốn</a></li>
+                    <li><a href="#">Thẻ</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1 class="page-title">Quản Lý Tiết Kiệm</h1>
+        
+        <div class="dashboard">
+            <div class="sidebar">
+                <div class="account-summary">
+                    <h2>Tài Khoản Của Tôi</h2>
+                    <div class="account-balance">35.250.000 VND</div>
+                    <p>Số tài khoản: <strong>12345678910</strong></p>
+                </div>
+                
+                <ul class="menu-list">
+                    <li><a href="#" class="active">Tổng Quan Tiết Kiệm</a></li>
+                    <li><a href="#">Gửi Tiết Kiệm Mới</a></li>
+                    <li><a href="#">Tất Toán Sổ Tiết Kiệm</a></li>
+                    <li><a href="#">Lịch Sử Giao Dịch</a></li>
+                    <li><a href="#">Báo Cáo & Thống Kê</a></li>
+                    <li><a href="#">Cài Đặt</a></li>
+                </ul>
+            </div>
+            
+            <div class="main-content">
+                <h2 class="section-title">Sổ Tiết Kiệm Của Tôi</h2>
+                
+                <div class="savings-cards">
+                    <div class="savings-card">
+                        <h3>Tiết Kiệm Thông Thường</h3>
+                        <div class="savings-amount">100.000.000 VND</div>
+                        <div class="savings-details">
+                            <p>Lãi suất: <strong>5.9%/năm</strong></p>
+                            <p>Kỳ hạn: <strong>12 tháng</strong></p>
+                            <p>Ngày mở: <strong>10/01/2025</strong></p>
+                            <p>Ngày đáo hạn: <strong>10/01/2026</strong></p>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="#" class="btn btn-primary">Chi Tiết</a>
+                            <a href="#" class="btn btn-outline">Tất Toán</a>
+                        </div>
+                    </div>
+                    
+                    <div class="savings-card">
+                        <h3>Tiết Kiệm Lãi Suất Cao</h3>
+                        <div class="savings-amount">200.000.000 VND</div>
+                        <div class="savings-details">
+                            <p>Lãi suất: <strong>6.8%/năm</strong></p>
+                            <p>Kỳ hạn: <strong>18 tháng</strong></p>
+                            <p>Ngày mở: <strong>15/12/2024</strong></p>
+                            <p>Ngày đáo hạn: <strong>15/06/2026</strong></p>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="#" class="btn btn-primary">Chi Tiết</a>
+                            <a href="#" class="btn btn-outline">Tất Toán</a>
+                        </div>
+                    </div>
+                    
+                    <div class="savings-card">
+                        <h3>Tiết Kiệm Linh Hoạt</h3>
+                        <div class="savings-amount">50.000.000 VND</div>
+                        <div class="savings-details">
+                            <p>Lãi suất: <strong>4.5%/năm</strong></p>
+                            <p>Kỳ hạn: <strong>6 tháng</strong></p>
+                            <p>Ngày mở: <strong>05/02/2025</strong></p>
+                            <p>Ngày đáo hạn: <strong>05/08/2025</strong></p>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="#" class="btn btn-primary">Chi Tiết</a>
+                            <a href="#" class="btn btn-outline">Tất Toán</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="create-new">
+                    <h3>Bạn muốn tạo sổ tiết kiệm mới?</h3>
+                    <p>Chúng tôi có nhiều gói tiết kiệm với lãi suất hấp dẫn phù hợp với nhu cầu của bạn.</p>
+                    <a href="#" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">Tạo Sổ Tiết Kiệm Mới</a>
+                </div>
+                
+                <div class="savings-offers">
+                    <h2 class="section-title">Gói Tiết Kiệm Đề Xuất</h2>
+                    <p>Dựa trên thói quen tài chính của bạn, chúng tôi đề xuất các gói tiết kiệm sau:</p>
+                    
+                    <div class="offers-list">
+                        <div class="offer-card">
+                            <h4>Tiết Kiệm Ưu Đãi</h4>
+                            <div class="interest-rate">7.2%</div>
+                            <p>Kỳ hạn 24 tháng với lãi suất cao nhất thị trường. Chỉ áp dụng trong tháng 3/2025.</p>
+                            <a href="#" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">Tìm Hiểu Thêm</a>
+                        </div>
+                        
+                        <div class="offer-card">
+                            <h4>Tiết Kiệm Online</h4>
+                            <div class="interest-rate">6.5%</div>
+                            <p>Mở và quản lý hoàn toàn online. Lãi suất tốt và nhiều quà tặng kèm theo.</p>
+                            <a href="#" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">Tìm Hiểu Thêm</a>
+                        </div>
+                        
+                        <div class="offer-card">
+                            <h4>Tiết Kiệm Linh Hoạt</h4>
+                            <div class="interest-rate">5.0%</div>
+                            <p>Rút tiền linh hoạt không mất lãi. Phù hợp với những người cần sử dụng vốn bất kỳ lúc nào.</p>
+                            <a href="#" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">Tìm Hiểu Thêm</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="transactions-list">
+                    <h2 class="section-title">Lịch Sử Giao Dịch Gần Đây</h2>
+                    
+                    <div class="transaction-item">
+                        <div>
+                            <strong>Gửi tiết kiệm</strong>
+                            <div class="transaction-date">15/03/2025</div>
+                        </div>
+                        <div class="transaction-amount deposit">+50.000.000 VND</div>
+                    </div>
+                    
+                    <div class="transaction-item">
+                        <div>
+                            <strong>Nhận lãi tiết kiệm</strong>
+                            <div class="transaction-date">10/03/2025</div>
+                        </div>
+                        <div class="transaction-amount deposit">+2.758.000 VND</div>
+                    </div>
+                    
+                    <div class="transaction-item">
+                        <div>
+                            <strong>Tất toán sổ tiết kiệm</strong>
+                            <div class="transaction-date">01/03/2025</div>
+                        </div>
+                        <div class="transaction-amount withdrawal">-100.000.000 VND</div>
+                    </div>
+                    
+                    <div class="transaction-item">
+                        <div>
+                            <strong>Gửi tiết kiệm</strong>
+                            <div class="transaction-date">15/02/2025</div>
+                        </div>
+                        <div class="transaction-amount deposit">+200.000.000 VND</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Ngân Hàng XYZ</h3>
+                <p>Đối tác tài chính đáng tin cậy, đồng hành cùng bạn trên mọi hành trình.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">y</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
+                    <li><a href="#">Thẻ Tín Dụng</a></li>
+                    <li><a href="#">Vay Cá Nhân</a></li>
+                    <li><a href="#">Vay Mua Nhà</a></li>
+                    <li><a href="#">Bảo Hiểm</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Biểu Phí</a></li>
+                    <li><a href="#">An Toàn & Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>123 Đường ABC, Quận XYZ, TP. HCM</li>
+                    <li>Hotline: 1900 xxxx</li>
+                    <li>Email: info@nganhangxyz.com</li>
+                    <li>Giờ làm việc: 8:00 - 17:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ngân Hàng XYZ. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            
+            const spans = document.querySelectorAll('.menu-toggle span');
+            spans[0].classList.toggle('rotate-45');
+            spans[1].classList.toggle('opacity-0');
+            spans[2].classList.toggle('rotate-negative-45');
+            
+            if (spans[0].classList.contains('rotate-45')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
