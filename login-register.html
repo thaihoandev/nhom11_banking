@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ngân Hàng XYZ - Đăng Nhập / Đăng Ký</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+      :root {
+        --primary: #003c63;
+        --primary-light: #005b96;
+        --primary-lighter: #e6f0f8;
+        --accent: #ffb600;
+        --text-dark: #333333;
+        --text-light: #6c757d;
+        --white: #ffffff;
+        --gray-light: #f5f7fa;
+        --gray: #dee2e6;
+        --shadow: 0 10px 25px rgba(0, 60, 99, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      body {
+        background-color: var(--gray-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .page-container {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bank-logo {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .logo-box {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: var(--primary);
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        color: var(--white);
+        font-weight: 700;
+        font-size: 24px;
+      }
+
+      .logo-box span {
+        color: var(--accent);
+        margin-right: 5px;
+      }
+
+      .auth-container {
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        background-color: var(--white);
+      }
+
+      .auth-tabs {
+        display: flex;
+        width: 30%;
+        flex-direction: column;
+        background-color: var(--primary-lighter);
+      }
+
+      .auth-tab {
+        padding: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        font-size: 18px;
+        color: var(--primary);
+      }
+
+      .auth-tab.active {
+        background-color: var(--white);
+        color: var(--primary);
+      }
+
+      .auth-tab.active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 5px;
+        background-color: var(--primary);
+      }
+
+      .auth-tab:hover:not(.active) {
+        background-color: rgba(0, 60, 99, 0.05);
+      }
+
+      .auth-tab-icon {
+        margin-right: 10px;
+      }
+
+      .auth-content {
+        flex: 1;
+        padding: 40px;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .tab-header {
+        margin-bottom: 30px;
+      }
+
+      .tab-header h2 {
+        font-size: 28px;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      .tab-header p {
+        color: var(--text-light);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--primary);
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid var(--gray);
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 60, 99, 0.1);
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .checkbox-group input {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .checkbox-group label {
+        color: var(--text-light);
+      }
+
+      .auth-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: var(--primary);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      .auth-btn:hover {
+        background-color: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 60, 99, 0.2);
+      }
+
+      .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .forgot-password {
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .forgot-password:hover {
+        color: var(--primary-light);
+        text-decoration: underline;
+      }
+
+      .divider {
+        margin: 30px 0;
+        display: flex;
+        align-items: center;
+        text-align: center;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid var(--gray);
+      }
+
+      .divider span {
+        padding: 0 10px;
+        color: var(--text-light);
+        font-size: 14px;
+      }
+
+      .social-login {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        background-color: var(--gray-light);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 20px;
+        color: var(--primary);
+        border: 1px solid var(--gray);
+      }
+
+      .social-btn:hover {
+        background-color: var(--primary-lighter);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 60, 99, 0.1);
+      }
+
+      .auth-info {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: var(--primary-lighter);
+        border-radius: 10px;
+        border-left: 5px solid var(--primary);
+      }
+
+      .auth-info h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .auth-info p {
+        color: var(--text-light);
+        font-size: 14px;
+      }
+
+      .support-badge {
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: var(--primary);
+        color: var(--white);
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 15px;
+      }
+
+      .support-badge:hover {
+        background-color: var(--primary-light);
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        .auth-container {
+          flex-direction: column;
+          max-width: 500px;
+        }
+
+        .auth-tabs {
+          width: 100%;
+          flex-direction: row;
+        }
+
+        .auth-tab {
+          flex: 1;
+          text-align: center;
+          padding: 15px;
+          font-size: 16px;
+        }
+
+        .auth-tab.active::before {
+          width: 100%;
+          height: 3px;
+          bottom: 0;
+          top: auto;
+          left: 0;
+        }
+
+        .auth-tab-icon {
+          display: block;
+          margin: 0 auto 5px;
+        }
+
+        .auth-content {
+          padding: 30px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .auth-tab {
+          font-size: 14px;
+          padding: 10px;
+        }
+
+        .auth-content {
+          padding: 20px;
+        }
+
+        .form-footer {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-container">
+      <div class="bank-logo">
+        <div class="logo-box"><span>XYZ</span> Ngân Hàng</div>
+      </div>
+
+      <div class="auth-container">
+        <!-- Auth Tabs -->
+        <div class="auth-tabs">
+          <div class="auth-tab active" onclick="switchTab('login')">
+            <span class="auth-tab-icon">🔐</span>
+            Đăng Nhập
+          </div>
+          <div class="auth-tab" onclick="switchTab('register')">
+            <span class="auth-tab-icon">📝</span>
+            Đăng Ký
+          </div>
+          <div class="auth-tab" onclick="switchTab('help')">
+            <span class="auth-tab-icon">❓</span>
+            Trợ Giúp
+          </div>
+        </div>
+
+        <!-- Auth Content -->
+        <div class="auth-content">
+          <!-- Login Tab -->
+          <div id="login" class="tab-content active">
+            <div class="tab-header">
+              <h2>Đăng Nhập Tài Khoản</h2>
+              <p>Vui lòng nhập thông tin tài khoản của bạn</p>
+            </div>
+            <form>
+              <div class="form-group">
+                <label for="login-username">Tên đăng nhập</label>
+                <input
+                  type="text"
+                  id="login-username"
+                  name="username"
+                  placeholder="Nhập tên đăng nhập"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="login-password">Mật khẩu</label>
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  placeholder="Nhập mật khẩu"
+                  required
+                />
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="remember-me" />
+                <label for="remember-me">Ghi nhớ đăng nhập</label>
+              </div>
+              <button type="submit" class="auth-btn">Đăng Nhập</button>
+              <div class="form-footer">
+                <a href="#" class="forgot-password">Quên mật khẩu?</a>
+              </div>
+
+              <div class="divider">
+                <span>HOẶC ĐĂNG NHẬP VỚI</span>
+              </div>
+
+              <div class="social-login">
+                <div class="social-btn">F</div>
+                <div class="social-btn">G</div>
+                <div class="social-btn">A</div>
+              </div>
+
+              <div class="auth-info">
+                <h3>Bảo mật thông tin</h3>
+                <p>
+                  Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn và không
+                  chia sẻ cho bên thứ ba mà không có sự đồng ý.
+                </p>
+                <div class="support-badge">Hỗ trợ 24/7</div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Register Tab -->
+          <div id="register" class="tab-content">
+            <div class="tab-header">
+              <h2>Tạo Tài Khoản Mới</h2>
+              <p>Đăng ký để trải nghiệm dịch vụ của Ngân Hàng XYZ</p>
+            </div>
+            <form>
+              <div class="form-group">
+                <label for="register-fullname">Họ và tên</label>
+                <input
+                  type="text"
+                  id="register-fullname"
+                  name="fullname"
+                  placeholder="Nhập họ và tên"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-email">Email</label>
+                <input
+                  type="email"
+                  id="register-email"
+                  name="email"
+                  placeholder="Nhập địa chỉ email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-phone">Số điện thoại</label>
+                <input
+                  type="tel"
+                  id="register-phone"
+                  name="phone"
+                  placeholder="Nhập số điện thoại"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-password">Mật khẩu</label>
+                <input
+                  type="password"
+                  id="register-password"
+                  name="password"
+                  placeholder="Tạo mật khẩu mới"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="register-confirm-password">Xác nhận mật khẩu</label>
+                <input
+                  type="password"
+                  id="register-confirm-password"
+                  name="confirm-password"
+                  placeholder="Xác nhận mật khẩu"
+                  required
+                />
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="terms" />
+                <label for="terms"
+                  >Tôi đồng ý với các điều khoản và điều kiện</label
+                >
+              </div>
+              <button type="submit" class="auth-btn">Đăng Ký</button>
+            </form>
+          </div>
+
+          <!-- Help Tab -->
+          <div id="help" class="tab-content">
+            <div class="tab-header">
+              <h2>Trợ Giúp & Hỗ Trợ</h2>
+              <p>Chúng tôi luôn sẵn sàng giúp đỡ bạn</p>
+            </div>
+            <div class="form-group">
+              <label>Bạn cần giúp đỡ gì?</label>
+              <input type="text" placeholder="Nhập câu hỏi của bạn" />
+            </div>
+            <div class="auth-info">
+              <h3>Các câu hỏi thường gặp</h3>
+              <p>
+                <strong>1. Làm thế nào để đặt lại mật khẩu?</strong><br />
+                Bạn có thể nhấp vào liên kết "Quên mật khẩu" tại trang đăng
+                nhập.
+              </p>
+              <p>
+                <strong>2. Tôi không thể đăng nhập?</strong><br />
+                Vui lòng kiểm tra tên đăng nhập và mật khẩu của bạn. Nếu vẫn
+                không được, hãy liên hệ với chúng tôi.
+              </p>
+              <p>
+                <strong>3. Làm thế nào để thay đổi thông tin cá nhân?</strong
+                ><br />
+                Sau khi đăng nhập, bạn có thể cập nhật thông tin cá nhân trong
+                phần Quản lý tài khoản.
+              </p>
+            </div>
+            <div class="support-badge">Liên hệ hỗ trợ viên</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function switchTab(tabId) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabContents.forEach((content) => {
+          content.classList.remove("active");
+        });
+
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll(".auth-tab");
+        tabs.forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Show the selected tab content
+        document.getElementById(tabId).classList.add("active");
+
+        // Add active class to the clicked tab
+        event.currentTarget.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
