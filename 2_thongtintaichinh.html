@@ -3,37 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Ký Vay Vốn - Ngân Hàng XYZ</title>
+    <title>Thông Tin Tài Chính - Ngân Hàng XYZ</title>
     <style>
-        :root {
-            --primary-color: #1a5276;
-            --secondary-color: #2980b9;
-            --accent-color: #3498db;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
+            background-color: #f5f5f5;
         }
+        
         a {
             text-decoration: none;
             color: inherit;
         }
         
-       
         /* Header */
         header {
             background-color: #005b96;
@@ -94,6 +83,32 @@
             transform: translateY(-2px);
         }
         
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Hero section */
         .hero {
             text-align: center;
             padding: 3rem 0;
@@ -104,7 +119,7 @@
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: #005b96;
         }
         
         .hero p {
@@ -114,43 +129,7 @@
             margin: 0 auto;
         }
         
-        .loan-types {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .loan-type {
-            background-color: white;
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .loan-type:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .loan-type h3 {
-            font-size: 1.3rem;
-            margin: 1rem 0;
-            color: var(--primary-color);
-        }
-        
-        .loan-type p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        .loan-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
+        /* Application form */
         .application-form {
             background-color: white;
             border-radius: 8px;
@@ -161,7 +140,7 @@
         
         .application-form h2 {
             font-size: 1.8rem;
-            color: var(--primary-color);
+            color: #005b96;
             margin-bottom: 0.5rem;
         }
         
@@ -210,7 +189,11 @@
         }
         
         .step.active .step-number {
-            background-color: var(--success-color);
+            background-color: #27ae60;
+        }
+        
+        .step.completed .step-number {
+            background-color: #27ae60;
         }
         
         .step-title {
@@ -220,7 +203,12 @@
         }
         
         .step.active .step-title {
-            color: var(--success-color);
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .step.completed .step-title {
+            color: #27ae60;
             font-weight: bold;
         }
         
@@ -230,7 +218,7 @@
         
         .form-section h3 {
             font-size: 1.3rem;
-            color: var(--primary-color);
+            color: #005b96;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 1px solid #eee;
@@ -249,7 +237,7 @@
         
         .required::after {
             content: ' *';
-            color: var(--danger-color);
+            color: #e74c3c;
         }
         
         .form-control {
@@ -262,7 +250,7 @@
         }
         
         .form-control:focus {
-            border-color: var(--accent-color);
+            border-color: #3498db;
             outline: none;
         }
         
@@ -293,12 +281,12 @@
         }
         
         .btn-primary {
-            background-color: var(--primary-color);
+            background-color: #005b96;
             color: white;
         }
         
         .btn-primary:hover {
-            background-color: var(--secondary-color);
+            background-color: #007cb9;
         }
         
         .btn-secondary {
@@ -316,7 +304,25 @@
             margin-top: 2rem;
         }
         
-        /* Footer Styles from paste.txt */
+        .currency-input {
+            position: relative;
+        }
+        
+        .currency-input input {
+            padding-right: 50px;
+        }
+        
+        .currency-input::after {
+            content: 'VNĐ';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Footer */
         footer {
             background-color: #003c63;
             color: white;
@@ -357,8 +363,6 @@
         
         .footer-column ul li a {
             transition: all 0.3s;
-            color: white;
-            text-decoration: none;
         }
         
         .footer-column ul li a:hover {
@@ -382,8 +386,6 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            color: white;
-            text-decoration: none;
         }
         
         .social-link:hover {
@@ -399,8 +401,32 @@
         }
         
         @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
             }
             
             .steps {
@@ -434,14 +460,11 @@
             .btn {
                 width: 100%;
             }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -457,12 +480,12 @@
             <nav>
                 <ul>
                     <li><a href="/index.html">Trang Chủ</a></li>
-                    <li><a href="/pages/profile-manager.html">Cá Nhân</a></li>
-                    <li><a href="/pages/blog.html">Bài viết</a></li>
-                    <li><a href="/pages/1_thongtincanhan.html">Vay Vốn</a></li>
-                    <li><a href="/pages/credit-card-management.html">Thẻ</a></li>
-                    <li><a href="/pages/about.html">Liên Hệ</a></li>
-                    <li><a href="/pages/login-register.html" class="login-btn">Đăng Nhập</a></li>
+                    <li><a href="/profile-manager.html">Cá Nhân</a></li>
+                    <li><a href="/blog.html">Bài viết</a></li>
+                    <li><a href="/1_thongtincanhan.html">Vay Vốn</a></li>
+                    <li><a href="/credit-card-management.html">Thẻ</a></li>
+                    <li><a href="/about.html">Liên Hệ</a></li>
+                    <li><a href="/login-register.html" class="login-btn">Đăng Nhập</a></li>
                 </ul>
             </nav>
         </div>
@@ -474,43 +497,17 @@
             <p>Chúng tôi cung cấp các giải pháp tài chính linh hoạt, đáp ứng mọi nhu cầu vay vốn với lãi suất ưu đãi và thủ tục đơn giản.</p>
         </section>
         
-        <section class="loan-types">
-            <div class="loan-type">
-                <div class="loan-icon">👤</div>
-                <h3>Vay Tiêu Dùng</h3>
-                <p>Khoản vay linh hoạt đáp ứng nhu cầu chi tiêu cá nhân với lãi suất hấp dẫn.</p>
-            </div>
-            
-            <div class="loan-type">
-                <div class="loan-icon">🏠</div>
-                <h3>Vay Mua Nhà</h3>
-                <p>Hiện thực hóa giấc mơ sở hữu nhà với khoản vay dài hạn, lãi suất ưu đãi.</p>
-            </div>
-            
-            <div class="loan-type">
-                <div class="loan-icon">🚗</div>
-                <h3>Vay Mua Xe</h3>
-                <p>Sở hữu phương tiện di chuyển với thủ tục đơn giản, giải ngân nhanh chóng.</p>
-            </div>
-            
-            <div class="loan-type">
-                <div class="loan-icon">💼</div>
-                <h3>Vay Kinh Doanh</h3>
-                <p>Hỗ trợ vốn cho doanh nghiệp phát triển, mở rộng hoạt động kinh doanh.</p>
-            </div>
-        </section>
-        
         <section class="application-form">
             <h2>Đăng Ký Vay Tiêu Dùng</h2>
             <p>Điền thông tin của bạn để bắt đầu quy trình đăng ký</p>
             
             <div class="steps">
-                <div class="step active">
+                <div class="step completed">
                     <div class="step-number">1</div>
                     <div class="step-title">Thông tin cá nhân</div>
                 </div>
                 
-                <div class="step">
+                <div class="step active">
                     <div class="step-number">2</div>
                     <div class="step-title">Thông tin tài chính</div>
                 </div>
@@ -526,106 +523,86 @@
                 </div>
             </div>
             
-            <form action="financial-info.html" method="post">
+            <form action="loan-details.html" method="post">
                 <div class="form-section">
-                    <h3>Thông Tin Cá Nhân</h3>
+                    <h3>Thông Tin Tài Chính</h3>
                     
-                    <div class="form-row">
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="fullName" class="required">Họ và tên</label>
-                                <input type="text" id="fullName" name="fullName" class="form-control" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="birthDate" class="required">Ngày sinh</label>
-                                <input type="date" id="birthDate" name="birthDate" class="form-control" required>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="employmentType" class="required">Loại hình công việc</label>
+                        <select id="employmentType" name="employmentType" class="form-control" required>
+                            <option value="" disabled selected>-- Chọn --</option>
+                            <option value="fullTime">Nhân viên toàn thời gian</option>
+                            <option value="partTime">Nhân viên bán thời gian</option>
+                            <option value="selfEmployed">Tự kinh doanh</option>
+                            <option value="contractor">Nhân viên theo hợp đồng</option>
+                            <option value="retired">Đã nghỉ hưu</option>
+                        </select>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-col">
                             <div class="form-group">
-                                <label for="idNumber" class="required">Số CMND/CCCD</label>
-                                <input type="text" id="idNumber" name="idNumber" class="form-control" required>
+                                <label for="companyName" class="required">Tên công ty/Đơn vị công tác</label>
+                                <input type="text" id="companyName" name="companyName" class="form-control" required>
                             </div>
                         </div>
                         
                         <div class="form-col">
                             <div class="form-group">
-                                <label for="idIssueDate" class="required">Ngày cấp</label>
-                                <input type="date" id="idIssueDate" name="idIssueDate" class="form-control" required>
+                                <label for="position" class="required">Chức vụ</label>
+                                <input type="text" id="position" name="position" class="form-control" required>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="idIssuePlace" class="required">Nơi cấp</label>
-                        <input type="text" id="idIssuePlace" name="idIssuePlace" class="form-control" required>
+                        <label for="workDuration" class="required">Thời gian làm việc</label>
+                        <select id="workDuration" name="workDuration" class="form-control" required>
+                            <option value="" disabled selected>-- Chọn --</option>
+                            <option value="lessThan1Year">Dưới 1 năm</option>
+                            <option value="1To3Years">1 - 3 năm</option>
+                            <option value="3To5Years">3 - 5 năm</option>
+                            <option value="5To10Years">5 - 10 năm</option>
+                            <option value="moreThan10Years">Trên 10 năm</option>
+                        </select>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="phone" class="required">Số điện thoại</label>
-                                <input type="tel" id="phone" name="phone" class="form-control" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" class="form-control">
-                            </div>
+                    <div class="form-group">
+                        <label for="monthlyIncome" class="required">Thu nhập hàng tháng (VNĐ)</label>
+                        <div class="currency-input">
+                            <input type="number" id="monthlyIncome" name="monthlyIncome" class="form-control" min="0" required>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="address" class="required">Địa chỉ hiện tại</label>
-                        <input type="text" id="address" name="address" class="form-control" required>
+                        <label for="otherIncome">Thu nhập khác (nếu có)</label>
+                        <div class="currency-input">
+                            <input type="number" id="otherIncome" name="otherIncome" class="form-control" min="0">
+                        </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="maritalStatus" class="required">Tình trạng hôn nhân</label>
-                                <select id="maritalStatus" name="maritalStatus" class="form-control" required>
-                                    <option value="" disabled selected>-- Chọn --</option>
-                                    <option value="single">Độc thân</option>
-                                    <option value="married">Đã kết hôn</option>
-                                    <option value="divorced">Ly hôn</option>
-                                    <option value="widowed">Góa phụ/phu</option>
-                                </select>
-                            </div>
+                    <div class="form-group">
+                        <label for="monthlyExpenses" class="required">Chi phí hàng tháng (VNĐ)</label>
+                        <div class="currency-input">
+                            <input type="number" id="monthlyExpenses" name="monthlyExpenses" class="form-control" min="0" required>
                         </div>
-                        
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="education" class="required">Trình độ học vấn</label>
-                                <select id="education" name="education" class="form-control" required>
-                                    <option value="" disabled selected>-- Chọn --</option>
-                                    <option value="highSchool">THPT</option>
-                                    <option value="college">Cao đẳng</option>
-                                    <option value="university">Đại học</option>
-                                    <option value="postGraduate">Sau đại học</option>
-                                </select>
-                            </div>
-                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="existingLoans">Các khoản vay hiện tại (nếu có)</label>
+                        <textarea id="existingLoans" name="existingLoans" class="form-control" rows="3" placeholder="Vui lòng liệt kê các khoản vay hiện tại, số tiền còn nợ và khoản thanh toán hàng tháng"></textarea>
                     </div>
                 </div>
                 
                 <div class="form-actions">
-                    <div></div>
-                    <a href="/pages/2_thongtintaichinh.html" class="btn btn-primary">Tiếp theo</a>
+                    <a href="/1_thongtincanhan.html" class="btn btn-secondary">Quay lại</a>
+                    <a href="/3_chitietkhoanvay.html"  class="btn btn-primary">Tiếp theo</a>
                 </div>
             </form>
         </section>
     </div>
     
-    <!-- Footer từ paste.txt -->
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-column">
@@ -676,5 +653,27 @@
             <p>&copy; 2025 Ngân Hàng XYZ. Tất cả quyền được bảo lưu.</p>
         </div>
     </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+            
+            const spans = document.querySelectorAll('.menu-toggle span');
+            spans[0].classList.toggle('rotate-45');
+            spans[1].classList.toggle('opacity-0');
+            spans[2].classList.toggle('rotate-negative-45');
+            
+            if (spans[0].classList.contains('rotate-45')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

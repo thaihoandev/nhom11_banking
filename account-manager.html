@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Tài Khoản - Ngân Hàng XYZ</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        color: #333;
+        line-height: 1.6;
+        background-color: #f5f7fa;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Header */
+      header {
+        background-color: #005b96;
+        color: white;
+        padding: 1rem 5%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .logo span {
+        color: #ffd700;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 20px;
+        position: relative;
+      }
+
+      nav ul li a {
+        padding: 10px 0;
+        display: block;
+        transition: all 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #ffd700;
+      }
+
+      .login-btn {
+        background-color: #ffd700;
+        color: #005b96;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      .login-btn:hover {
+        background-color: #ffcc00;
+        transform: translateY(-2px);
+      }
+
+      /* Admin Dashboard */
+      .dashboard-container {
+        display: flex;
+        min-height: calc(
+          100vh - 73px - 320px
+        ); /* Adjust based on header and footer height */
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background-color: #003c63;
+        color: white;
+        padding: 20px 0;
+        transition: all 0.3s;
+      }
+
+      .sidebar-header {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .sidebar-header h2 {
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+      }
+
+      .sidebar-header h2 span {
+        margin-left: 10px;
+      }
+
+      .admin-info {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .admin-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #ffd700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 10px;
+        color: #003c63;
+      }
+
+      .admin-name {
+        font-weight: bold;
+      }
+
+      .admin-role {
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+
+      .sidebar-menu {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 5px;
+      }
+
+      .sidebar-menu li a {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s;
+      }
+
+      .sidebar-menu li a:hover,
+      .sidebar-menu li a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #ffd700;
+        border-left: 4px solid #ffd700;
+      }
+
+      .sidebar-menu li a.active {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .sidebar-menu li a i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 20px;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .dashboard-title h1 {
+        font-size: 1.8rem;
+        color: #003c63;
+      }
+
+      .dashboard-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .action-btn {
+        background-color: #003c63;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s;
+      }
+
+      .action-btn:hover {
+        background-color: #00518b;
+      }
+
+      .action-btn.primary {
+        background-color: #005b96;
+      }
+
+      .action-btn.primary:hover {
+        background-color: #006eb3;
+      }
+
+      /* Stats Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .stat-card.primary .stat-icon {
+        background-color: rgba(0, 91, 150, 0.1);
+        color: #005b96;
+      }
+
+      .stat-card.success .stat-icon {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+      }
+
+      .stat-card.warning .stat-icon {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+      }
+
+      .stat-card.danger .stat-icon {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+      }
+
+      .stat-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+      }
+
+      .stat-card p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .stat-card .stat-change {
+        display: flex;
+        align-items: center;
+        font-size: 0.85rem;
+        margin-top: 5px;
+      }
+
+      .stat-card .stat-change.positive {
+        color: #28a745;
+      }
+
+      .stat-card .stat-change.negative {
+        color: #dc3545;
+      }
+
+      /* Tables */
+      .table-container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .table-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #003c63;
+      }
+
+      .table-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .table-filter {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .table-filter select {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .table-search {
+        position: relative;
+      }
+
+      .table-search input {
+        padding: 5px 10px 5px 30px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .table-search::before {
+        content: "🔍";
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th,
+      table td {
+        padding: 15px 20px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      table th {
+        font-weight: 600;
+        color: #003c63;
+        background-color: #f8f9fa;
+      }
+
+      table tr:hover {
+        background-color: #f5f7fa;
+      }
+
+      .account-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .account-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e6f2ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #003c63;
+        font-weight: bold;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .status-badge.active {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+      }
+
+      .status-badge.inactive {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+      }
+
+      .status-badge.suspended {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+      }
+
+      .status-badge.pending {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+      }
+
+      .account-actions {
+        display: flex;
+        gap: 5px;
+      }
+
+      .account-actions button {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        border: none;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .account-actions button:hover {
+        background-color: #e9ecef;
+      }
+
+      .account-actions button.edit:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+        color: #007bff;
+      }
+
+      .account-actions button.delete:hover {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        justify-content: flex-end;
+        padding: 15px 20px;
+        align-items: center;
+      }
+
+      .pagination-info {
+        margin-right: auto;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .pagination-controls {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+
+      .pagination-controls button {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        background-color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pagination-controls button:hover {
+        background-color: #f5f7fa;
+      }
+
+      .pagination-controls button.active {
+        background-color: #003c63;
+        color: white;
+        border-color: #003c63;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #003c63;
+        color: white;
+        padding: 4rem 5% 2rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 30px;
+      }
+
+      .footer-column h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #ffd700;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-column ul li a {
+        transition: all 0.3s;
+      }
+
+      .footer-column ul li a:hover {
+        color: #ffd700;
+        padding-left: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .social-link {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+
+      .social-link:hover {
+        background-color: #ffd700;
+        color: #003c63;
+        transform: translateY(-3px);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Mobile Navigation */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .sidebar-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 70px;
+          overflow: hidden;
+        }
+
+        .sidebar-header h2 span,
+        .admin-name,
+        .admin-role {
+          display: none;
+        }
+
+        .sidebar-menu li a span {
+          display: none;
+        }
+
+        .sidebar-menu li a {
+          padding: 15px 0;
+          justify-content: center;
+        }
+
+        .sidebar-menu li a i {
+          margin-right: 0;
+        }
+
+        .sidebar-header {
+          text-align: center;
+        }
+
+        .admin-info {
+          justify-content: center;
+        }
+
+        .admin-avatar {
+          margin-right: 0;
+        }
+
+        .sidebar-toggle {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        nav {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          width: 80%;
+          height: calc(100vh - 70px);
+          background-color: #005b96;
+          transition: all 0.3s;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav.active {
+          left: 0;
+        }
+
+        nav ul {
+          flex-direction: column;
+          padding: 20px;
+        }
+
+        nav ul li {
+          margin: 0 0 15px 0;
+        }
+
+        .dashboard-container {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          z-index: 90;
+          padding: 10px 0;
+          height: auto;
+        }
+
+        .sidebar-header,
+        .admin-info,
+        .sidebar-toggle {
+          display: none;
+        }
+
+        .sidebar-menu {
+          display: flex;
+          justify-content: space-around;
+        }
+
+        .sidebar-menu li {
+          margin-bottom: 0;
+        }
+
+        .sidebar-menu li a {
+          flex-direction: column;
+          padding: 10px;
+          font-size: 0.8rem;
+        }
+
+        .sidebar-menu li a i {
+          margin-right: 0;
+          margin-bottom: 5px;
+        }
+
+        .sidebar-menu li a span {
+          display: block;
+          font-size: 0.7rem;
+        }
+
+        .main-content {
+          margin-bottom: 70px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .table-container {
+          overflow-x: auto;
+        }
+
+        .table-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .table-actions {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .table-filter {
+          width: 100%;
+        }
+
+        .table-search {
+          width: 100%;
+        }
+
+        .table-search input {
+          width: 100%;
+        }
+
+        .pagination {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .pagination-info {
+          margin-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+        </div>
+
+        <div class="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <nav>
+                <ul>
+                    <li><a href="/index.html">Trang Chủ</a></li>
+                    <li><a href="/profile-manager.html">Cá Nhân</a></li>
+                    <li><a href="/blog.html">Bài viết</a></li>
+                    <li><a href="/1_thongtincanhan.html">Vay Vốn</a></li>
+                    <li><a href="/credit-card-management.html">Thẻ</a></li>
+                    <li><a href="/about.html">Liên Hệ</a></li>
+                    <li><a href="/login-register.html" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+      </div>
+    </header>
+
+    <!-- Admin Dashboard -->
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-toggle">≡</div>
+
+        <div class="sidebar-header">
+          <h2>🔒 <span>Trang Quản Trị</span></h2>
+        </div>
+
+        <div class="admin-info">
+          <div class="admin-avatar">A</div>
+          <div class="admin-details">
+            <div class="admin-name">Admin</div>
+            <div class="admin-role">Quản trị viên</div>
+          </div>
+        </div>
+
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#" class="active">
+              <i>📊</i>
+              <span>Bảng Điều Khiển</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i>👤</i>
+              <span>Quản Lý Tài Khoản</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i>💰</i>
+              <span>Giao Dịch</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i>📝</i>
+              <span>Báo Cáo</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i>🔔</i>
+              <span>Thông Báo</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i>⚙️</i>
+              <span>Cài Đặt</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i>🚪</i>
+              <span>Đăng Xuất</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="dashboard-header">
+          <div class="dashboard-title">
+            <h1>Quản Lý Tài Khoản</h1>
+          </div>
+          <div class="dashboard-actions">
+            <button class="action-btn primary">
+              <span>+</span> Thêm Tài Khoản Mới
+            </button>
+            <button class="action-btn"><span>📤</span> Xuất Dữ Liệu</button>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-icon">👤</div>
+            <h3>15,840</h3>
+            <p>Tổng Số Tài Khoản</p>
+            <div class="stat-change positive">↑ 5.2% so với tháng trước</div>
+          </div>
+
+          <div class="stat-card success">
+            <div class="stat-icon">✅</div>
+            <h3>12,458</h3>
+            <p>Tài Khoản Hoạt Động</p>
+            <div class="stat-change positive">↑ 3.1% so với tháng trước</div>
+          </div>
+
+          <div class="stat-card warning">
+            <div class="stat-icon">⏳</div>
+            <h3>842</h3>
+            <p>Tài Khoản Chờ Xác Minh</p>
+            <div class="stat-change negative">↓ 2.3% so với tháng trước</div>
+          </div>
+
+          <div class="stat-card danger">
+            <div class="stat-icon">🔒</div>
+            <h3>287</h3>
+            <p>Tài Khoản Bị Khóa</p>
+            <div class="stat-change negative">↓ 1.5% so với tháng trước</div>
+          </div>
+        </div>
+
+        <!-- Accounts Table -->
+        <div class="table-container">
+          <div class="table-header">
+            <div class="table-title">Danh Sách Tài Khoản</div>
+            <div class="table-actions">
+              <div class="table-filter">
+                <span>Lọc:</span>
+                <select>
+                  <option value="all">Tất Cả</option>
+                  <option value="active">Hoạt Động</option>
+                  <option value="inactive">Không Hoạt Động</option>
+                  <option value="suspended">Tạm Khóa</option>
+                  <option value="pending">Chờ Xác Minh</option>
+                </select>
+              </div>
+              <div class="table-search">
+                <input type="text" placeholder="Tìm kiếm..." />
+              </div>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Người Dùng</th>
+                <th>Số Tài Khoản</th>
+                <th>Loại Tài Khoản</th>
+                <th>Số Dư</th>
+                <th>Ngày Đăng Ký</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="account-info">
+                    <div class="account-avatar">NT</div>
+                    <div>
+                      <div><strong>Nguyễn Văn Toàn</strong></div>
+                      <div>toannv@gmail.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>104857293</td>
+                <td>Cá Nhân</td>
+                <td>85,250,000 VNĐ</td>
+                <td>12/12/2024</td>
+                <td><span class="status-badge active">Hoạt Động</span></td>
+                <td>
+                  <div class="account-actions">
+                    <button class="edit" title="Chỉnh sửa">✏️</button>
+                    <button title="Xem chi tiết">👁️</button>
+                    <button class="delete" title="Khóa tài khoản">🔒</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="account-info">
+                    <div class="account-avatar">LH</div>
+                    <div>
+                      <div><strong>Lê Thị Hương</strong></div>
+                      <div>huongleth@gmail.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>104857865</td>
+                <td>Cá Nhân</td>
+                <td>120,450,000 VNĐ</td>
+                <td>05/12/2024</td>
+                <td><span class="status-badge active">Hoạt Động</span></td>
+                <td>
+                  <div class="account-actions">
+                    <button class="edit" title="Chỉnh sửa">✏️</button>
+                    <button title="Xem chi tiết">👁️</button>
+                    <button class="delete" title="Khóa tài khoản">🔒</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="account-info">
+                    <div class="account-avatar">CA</div>
+                    <div>
+                      <div><strong>Công Ty ABC</strong></div>
+                      <div>info@abc.com.vn</div>
+                    </div>
+                  </div>
+                </td>
+                <td>104858753</td>
+                <td>Doanh Nghiệp</td>
+                <td>4,750,000,000 VNĐ</td>
+                <td>20/11/2024</td>
+                <td><span class="status-badge active">Hoạt Động</span></td>
+                <td>
+                  <div class="account-actions">
+                    <button class="edit" title="Chỉnh sửa">✏️</button>
+                    <button title="Xem chi tiết">👁️</button>
+                    <button class="delete" title="Khóa tài khoản">🔒</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="account-info">
+                    <div class="account-avatar">PT</div>
+                    <div>
+                      <div><strong>Phạm Thanh Tuấn</strong></div>
+                      <div>tuanpt@gmail.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>104857654</td>
+                <td>Cá Nhân</td>
+                <td>35,120,000 VNĐ</td>
+                <td>15/12/2024</td>
+                <td><span class="status-badge suspended">Tạm Khóa</span></td>
+                <td>
+                  <div class="account-actions">
+                    <button class="edit" title="Chỉnh sửa">✏️</button>
+                    <button title="Xem chi tiết">👁️</button>
+                    <button title="Mở khóa tài khoản">🔓</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="account-info">
+                    <div class="account-avatar">TA</div>
+                    <div>
+                      <div><strong>Trần Anh Dũng</strong></div>
+                      <div>dungta@gmail.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>104859876</td>
+                <td>Cá Nhân</td>
+                <td>68,350,000 VNĐ</td>
+                <td>08/12/2024</td>
+                <td><span class="status-badge pending">Chờ Xác Minh</span></td>
+                <td>
+                  <div class="account-actions">
+                    <button class="edit" title="Chỉnh sửa">✏️</button>
+                    <button title="Xem chi tiết">👁️</button>
+                    <button title="Xác minh tài khoản">✓</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="account-info">
+                    <div class="account-avatar">KD</div>
+                    <div>
+                      <div><strong>Công Ty TNHH KD</strong></div>
+                      <div>contact@kdcompany.vn</div>
+                    </div>
+                  </div>
+                </td>
+                <td>104852345</td>
+                <td>Doanh Nghiệp</td>
+                <td>2,850,000,000 VNĐ</td>
+                <td>01/12/2024</td>
+                <td>
+                  <span class="status-badge inactive">Không Hoạt Động</span>
+                </td>
+                <td>
+                  <div class="account-actions">
+                    <button class="edit" title="Chỉnh sửa">✏️</button>
+                    <button title="Xem chi tiết">👁️</button>
+                    <button title="Kích hoạt tài khoản">▶️</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <div class="pagination-info">Hiển thị 1-6 của 15,840 tài khoản</div>
+            <div class="pagination-controls">
+              <button disabled>«</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>4</button>
+              <button>5</button>
+              <button>»</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="table-container">
+          <div class="table-header">
+            <div class="table-title">Hoạt Động Gần Đây</div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Thời Gian</th>
+                <th>Người Dùng</th>
+                <th>Hoạt Động</th>
+                <th>Trạng Thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>30/03/2025 - 14:25</td>
+                <td>Admin</td>
+                <td>Xác minh tài khoản #104859012</td>
+                <td><span class="status-badge active">Thành Công</span></td>
+              </tr>
+              <tr>
+                <td>30/03/2025 - 13:42</td>
+                <td>Admin</td>
+                <td>Cập nhật thông tin tài khoản #104857293</td>
+                <td><span class="status-badge active">Thành Công</span></td>
+              </tr>
+              <tr>
+                <td>30/03/2025 - 11:18</td>
+                <td>Admin</td>
+                <td>Khóa tài khoản #104851245</td>
+                <td><span class="status-badge active">Thành Công</span></td>
+              </tr>
+              <tr>
+                <td>30/03/2025 - 09:54</td>
+                <td>Admin</td>
+                <td>Thêm tài khoản mới #104859876</td>
+                <td><span class="status-badge active">Thành Công</span></td>
+              </tr>
+              <tr>
+                <td>29/03/2025 - 16:32</td>
+                <td>Admin</td>
+                <td>Cập nhật hạn mức tài khoản #104852345</td>
+                <td><span class="status-badge active">Thành Công</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <div class="pagination-info">Hiển thị hoạt động gần đây nhất</div>
+            <button class="action-btn primary">Xem Tất Cả</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Về Chúng Tôi</h3>
+          <ul>
+            <li><a href="#">Giới Thiệu</a></li>
+            <li><a href="#">Lịch Sử Phát Triển</a></li>
+            <li><a href="#">Tầm Nhìn & Sứ Mệnh</a></li>
+            <li><a href="#">Cơ Cấu Tổ Chức</a></li>
+            <li><a href="#">Đối Tác Chiến Lược</a></li>
+            <li><a href="#">Cơ Hội Nghề Nghiệp</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Dịch Vụ</h3>
+          <ul>
+            <li><a href="#">Tài Khoản & Thẻ</a></li>
+            <li><a href="#">Tiết Kiệm</a></li>
+            <li><a href="#">Cho Vay</a></li>
+            <li><a href="#">Bảo Hiểm</a></li>
+            <li><a href="#">Đầu Tư</a></li>
+            <li><a href="#">Thanh Toán</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Hỗ Trợ</h3>
+          <ul>
+            <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+            <li><a href="#">Biểu Phí Dịch Vụ</a></li>
+            <li><a href="#">Biểu Mẫu</a></li>
+            <li><a href="#">Hướng Dẫn Giao Dịch</a></li>
+            <li><a href="#">Bảo Mật</a></li>
+            <li><a href="#">Liên Hệ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Kết Nối</h3>
+          <p>
+            Theo dõi chúng tôi trên các kênh mạng xã hội để cập nhật thông tin
+            mới nhất
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link">f</a>
+            <a href="#" class="social-link">in</a>
+            <a href="#" class="social-link">YT</a>
+            <a href="#" class="social-link">zl</a>
+          </div>
+          <p style="margin-top: 15px">Hotline: 1900 xxxx</p>
+          <p>Email: info@nganhangxyz.com.vn</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Ngân Hàng XYZ. Tất cả các quyền được bảo lưu.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Menu Toggle
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("nav");
+
+      menuToggle.addEventListener("click", () => {
+        nav.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+      });
+
+      // Sidebar Toggle
+      const sidebarToggle = document.querySelector(".sidebar-toggle");
+      const sidebar = document.querySelector(".sidebar");
+
+      sidebarToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("expanded");
+
+        if (sidebar.classList.contains("expanded")) {
+          sidebar.style.width = "250px";
+        } else {
+          sidebar.style.width = "70px";
+        }
+      });
+    </script>
+  </body>
+</html>
