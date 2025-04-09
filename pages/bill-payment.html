@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Hóa Đơn - Ngân Hàng XYZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Page Banner */
+        .page-banner {
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), url('/api/placeholder/1200/300') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .page-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-banner p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        /* Bill Payment Section */
+        .bill-payment {
+            padding: 4rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #005b96;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 3px;
+            background-color: #ffd700;
+            margin: 10px auto 0;
+        }
+        
+        .bill-payment-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .bill-payment-form {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .bill-payment-types {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #005b96;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #005b96;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 91, 150, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #005b96;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #004a7c;
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .payment-type-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .payment-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .payment-type-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .payment-type-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: #005b96;
+        }
+        
+        .payment-type-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #005b96;
+        }
+        
+        /* Recent Payments Section */
+        .recent-payments {
+            padding: 4rem 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .payments-table th,
+        .payments-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .payments-table th {
+            background-color: #005b96;
+            color: white;
+        }
+        
+        .payments-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .payments-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-failed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 5%;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+        }
+        
+        .faq-answer.active {
+            padding: 15px 20px;
+            max-height: 300px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .page-banner h1 {
+                font-size: 2rem;
+            }
+            
+            .payments-table {
+                overflow-x: auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+            </div>
+            
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="/index.html">Trang Chủ</a></li>
+                    <li><a href="/pages/profile-manager.html">Cá Nhân</a></li>
+                    <li><a href="/pages/blog.html">Bài viết</a></li>
+                    <li><a href="/pages/1_thongtincanhan.html">Vay Vốn</a></li>
+                    <li><a href="/pages/credit-card-management.html">Thẻ</a></li>
+                    <li><a href="/pages/about.html">Liên Hệ</a></li>
+                    <li><a href="/pages/login-register.html" class="login-btn">Đăng Nhập</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <h1>Thanh Toán Hóa Đơn</h1>
+        <p>Thanh toán hóa đơn nhanh chóng, an toàn và thuận tiện với Ngân hàng XYZ. Chúng tôi hỗ trợ đa dạng loại hóa đơn và phương thức thanh toán.</p>
+    </section>
+    
+    <!-- Bill Payment Section -->
+    <section class="bill-payment">
+        <div class="section-title">
+            <h2>Thanh Toán Ngay</h2>
+        </div>
+        
+        <div class="bill-payment-container">
+            <div class="bill-payment-form">
+                <form>
+                    <div class="form-group">
+                        <label for="bill-type">Loại Hóa Đơn</label>
+                        <select class="form-control" id="bill-type">
+                            <option value="">-- Chọn loại hóa đơn --</option>
+                            <option value="electric">Điện</option>
+                            <option value="water">Nước</option>
+                            <option value="phone">Điện thoại</option>
+                            <option value="internet">Internet</option>
+                            <option value="tv">Truyền hình cáp</option>
+                            <option value="insurance">Bảo hiểm</option>
+                            <option value="credit-card">Thẻ tín dụng</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="provider">Nhà Cung Cấp</label>
+                        <select class="form-control" id="provider">
+                            <option value="">-- Chọn nhà cung cấp --</option>
+                            <option value="evn">EVN</option>
+                            <option value="viwaco">VIWACO</option>
+                            <option value="viettel">Viettel</option>
+                            <option value="vnpt">VNPT</option>
+                            <option value="fpt">FPT</option>
+                            <option value="vtvcab">VTVcab</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customer-code">Mã Khách Hàng/Số Hóa Đơn</label>
+                        <input type="text" class="form-control" id="customer-code" placeholder="Nhập mã khách hàng hoặc số hóa đơn">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Số Tiền</label>
+                        <input type="text" class="form-control" id="amount" placeholder="Số tiền cần thanh toán">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment-method">Phương Thức Thanh Toán</label>
+                        <select class="form-control" id="payment-method">
+                            <option value="">-- Chọn phương thức thanh toán --</option>
+                            <option value="account">Tài khoản thanh toán</option>
+                            <option value="credit-card">Thẻ tín dụng</option>
+                            <option value="debit-card">Thẻ ghi nợ</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-block">Thanh Toán Ngay</button>
+                </form>
+            </div>
+            
+            <div class="bill-payment-types">
+                <h3 style="margin-bottom: 20px; color: #005b96;">Các Loại Hóa Đơn</h3>
+                
+                <div class="payment-type-card">
+                    <div class="payment-type-header">
+                        <div class="payment-type-icon">💡</div>
+                        <div class="payment-type-title">Hóa Đơn Điện</div>
+                    </div>
+                    <p>Thanh toán hóa đơn điện của EVN, EVN Hà Nội, EVN HCM và các chi nhánh trên toàn quốc.</p>
+                </div>
+                
+                <div class="payment-type-card">
+                    <div class="payment-type-header">
+                        <div class="payment-type-icon">💧</div>
+                        <div class="payment-type-title">Hóa Đơn Nước</div>
+                    </div>
+                    <p>Thanh toán hóa đơn nước của các nhà cung cấp như VIWACO, SAWACO, và các công ty cấp nước khác.</p>
+                </div>
+                
+                <div class="payment-type-card">
+                    <div class="payment-type-header">
+                        <div class="payment-type-icon">📱</div>
+                        <div class="payment-type-title">Cước Điện Thoại & Internet</div>
+                    </div>
+                    <p>Thanh toán cước điện thoại, internet của Viettel, VNPT, MobiFone, FPT và các nhà mạng khác.</p>
+                </div>
+                
+                <div class="payment-type-card">
+                    <div class="payment-type-header">
+                        <div class="payment-type-icon">📺</div>
+                        <div class="payment-type-title">Truyền Hình Cáp</div>
+                    </div>
+                    <p>Thanh toán cước truyền hình của VTVcab, SCTV, K+, và các nhà cung cấp truyền hình khác.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recent Payments Section -->
+    <section class="recent-payments">
+        <div class="section-title">
+            <h2>Lịch Sử Thanh Toán</h2>
+        </div>
+        
+        <div class="container">
+            <table class="payments-table">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Loại Hóa Đơn</th>
+                        <th>Nhà Cung Cấp</th>
+                        <th>Số Tiền</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>20/03/2025</td>
+                        <td>Điện</td>
+                        <td>EVN Hà Nội</td>
+                        <td>850.000 VNĐ</td>
+                        <td><span class="status status-success">Thành công</span></td>
+                    </tr>
+                    <tr>
+                        <td>15/03/2025</td>
+                        <td>Internet</td>
+                        <td>Viettel</td>
+                        <td>320.000 VNĐ</td>
+                        <td><span class="status status-success">Thành công</span></td>
+                    </tr>
+                    <tr>
+                        <td>10/03/2025</td>
+                        <td>Nước</td>
+                        <td>VIWACO</td>
+                        <td>230.000 VNĐ</td>
+                        <td><span class="status status-success">Thành công</span></td>
+                    </tr>
+                    <tr>
+                        <td>05/03/2025</td>
+                        <td>Truyền hình cáp</td>
+                        <td>VTVcab</td>
+                        <td>190.000 VNĐ</td>
+                        <td><span class="status status-pending">Đang xử lý</span></td>
+                    </tr>
+                    <tr>
+                        <td>28/02/2025</td>
+                        <td>Điện thoại</td>
+                        <td>Mobifone</td>
+                        <td>150.000 VNĐ</td>
+                        <td><span class="status status-failed">Thất bại</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-title">
+            <h2>Câu Hỏi Thường Gặp</h2>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    Tôi có thể thanh toán những loại hóa đơn nào?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Ngân hàng XYZ hỗ trợ thanh toán đa dạng loại hóa đơn bao gồm: điện, nước, điện thoại, internet, truyền hình cáp, bảo hiểm, thẻ tín dụng và nhiều loại hóa đơn khác. Danh sách nhà cung cấp được cập nhật thường xuyên để đáp ứng nhu cầu của khách hàng.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Làm thế nào để thanh toán hóa đơn tự động hàng tháng?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Để thiết lập thanh toán hóa đơn tự động, bạn cần đăng nhập vào tài khoản ngân hàng XYZ, chọn mục "Thanh toán hóa đơn", sau đó chọn "Đăng ký thanh toán tự động". Điền các thông tin cần thiết như loại hóa đơn, nhà cung cấp, mã khách hàng và tài khoản thanh toán. Hệ thống sẽ tự động thanh toán hóa đơn khi đến kỳ.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Tôi có bị tính phí khi thanh toán hóa đơn không?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Ngân hàng XYZ KHÔNG tính phí cho hầu hết các giao dịch thanh toán hóa đơn khi thực hiện qua Internet Banking hoặc Mobile Banking. Tuy nhiên, một số loại hóa đơn đặc biệt hoặc thanh toán qua phương thức khác có thể phát sinh phí nhỏ. Vui lòng tham khảo biểu phí dịch vụ trên website chính thức của ngân hàng để biết chi tiết.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Mất bao lâu để hoàn tất một giao dịch thanh toán hóa đơn?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Hầu hết các giao dịch thanh toán hóa đơn được xử lý ngay lập tức hoặc trong vòng vài phút. Tuy nhiên, tùy thuộc vào nhà cung cấp, một số giao dịch có thể mất từ 1-2 ngày làm việc để được cập nhật trong hệ thống của nhà cung cấp dịch vụ. Bạn luôn có thể kiểm tra trạng thái giao dịch trong phần "Lịch sử thanh toán".</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Tôi có thể thanh toán hóa đơn cho người khác không?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Có, bạn hoàn toàn có thể thanh toán hóa đơn cho người khác bằng cách nhập mã khách hàng hoặc số hóa đơn của họ. Bạn chỉ cần biết chính xác thông tin thanh toán như mã khách hàng/số hóa đơn và nhà cung cấp dịch vụ.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Ngân Hàng XYZ</h3>
+                <p>Đối tác tài chính đáng tin cậy, đồng hành cùng bạn trên mọi hành trình.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">y</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Dịch Vụ</h3>
+                <ul>
+                    <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
+                    <li><a href="#">Thẻ Tín Dụng</a></li>
+                    <li><a href="#">Vay Cá Nhân</a></li>
+                    <li><a href="#">Vay Mua Nhà</a></li>
+                    <li><a href="#">Bảo Hiểm</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hỗ Trợ</h3>
+                <ul>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Biểu Phí</a></li>
+                    <li><a href="#">An Toàn & Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Liên Hệ</h3>
+                <ul>
+                    <li>123 Đường ABC, Quận XYZ, TP. HCM</li>
+                    <li>Hotline: 1900 xxxx</li>
+                    <li>Email: info@nganhangxyz.com</li>
+                    <li>Giờ làm việc: 8:00 - 17:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025<p>&copy; 2025 Ngân Hàng XYZ. Tất cả các quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // FAQ Toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+                
+                // Change plus sign to minus when open
+                const sign = question.querySelector('span');
+                if (answer.classList.contains('active')) {
+                    sign.textContent = '-';
+                } else {
+                    sign.textContent = '+';
+                }
+                
+                // Close other open FAQs
+                faqQuestions.forEach(item => {
+                    if (item !== question) {
+                        item.nextElementSibling.classList.remove('active');
+                        item.querySelector('span').textContent = '+';
+                    }
+                });
+            });
+        });
+        
+        // Form Validation
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const billType = document.getElementById('bill-type').value;
+            const provider = document.getElementById('provider').value;
+            const customerCode = document.getElementById('customer-code').value;
+            const amount = document.getElementById('amount').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            
+            if (!billType || !provider || !customerCode || !amount || !paymentMethod) {
+                alert('Vui lòng điền đầy đủ thông tin thanh toán!');
+                return;
+            }
+            
+            // Simulate payment process
+            alert('Đang xử lý thanh toán. Vui lòng chờ...');
+            
+            // Simulate successful payment after 2 seconds
+            setTimeout(() => {
+                alert('Thanh toán thành công! Mã giao dịch: XYZ' + Math.floor(Math.random() * 1000000));
+                form.reset();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
