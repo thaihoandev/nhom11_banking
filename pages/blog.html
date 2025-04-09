@@ -4,14 +4,627 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tin Tức & Blog - Ngân Hàng XYZ</title>
-
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header */
+        header {
+            background-color: #005b96;
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            padding: 10px 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #005b96;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 500px;
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), url('/api/placeholder/1200/500') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background-color: white;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Page header */
+        .page-header {
+            background-color: #235c7e;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+        
+        /* Blog categories */
+        .blog-categories {
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .categories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px 20px;
+        }
+        
+        .category-tag {
+            padding: 6px 12px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #235c7e;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tag.active {
+            background-color: #235c7e;
+            color: white;
+        }
+        
+        /* Search section */
+        .search-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .search-container {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .search-button {
+            padding: 10px 20px;
+            background-color: #235c7e;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        /* Section titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title h2 {
+            color: #235c7e;
+            font-size: 24px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: "";
+            position: absolute;
+            height: 3px;
+            width: 60px;
+            background-color: #ffcc00;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Featured news */
+        .featured-news {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .featured-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        
+        .featured-main {
+            grid-column: 1 / 3;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .featured-main img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 20px;
+        }
+        
+        .featured-tag {
+            background-color: #ffcc00;
+            color: #235c7e;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .featured-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #235c7e;
+        }
+        
+        .featured-meta {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .featured-meta img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .featured-meta span {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .featured-secondary {
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .secondary-image {
+            flex: 0 0 40%;
+        }
+        
+        .secondary-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .secondary-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .secondary-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #235c7e;
+        }
+        
+        .read-more {
+            color: #235c7e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        /* Blog posts */
+        .blog-posts {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+        }
+        
+        .post-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .post-content {
+            padding: 20px;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .post-category {
+            background-color: #f0f0f0;
+            color: #235c7e;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .post-date {
+            color: #777;
+            font-size: 12px;
+        }
+        
+        .post-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #235c7e;
+        }
+        
+        .post-excerpt {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            color: #235c7e;
+            margin: 0 5px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .pagination-item.active {
+            background-color: #235c7e;
+            color: white;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background-color: #235c7e;
+            padding: 60px 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .newsletter h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter p {
+            margin-bottom: 25px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .newsletter-button {
+            padding: 12px 25px;
+            background-color: #ffcc00;
+            color: #235c7e;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003c63;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd700;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #ffd700;
+            color: #003c63;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: #005b96;
+                transition: all 0.3s;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-button {
+                border-radius: 4px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="#">Ngân&nbsp;Hàng<span>XYZ</span></a>
+                <a href="/">Ngân&nbsp;Hàng<span>H</span></a>
             </div>
             
             <div class="menu-toggle">
@@ -22,13 +635,13 @@
             
             <nav>
                 <ul>
-                    <li><a href="#">Trang Chủ</a></li>
-                    <li><a href="#">Cá Nhân</a></li>
-                    <li><a href="#">Doanh Nghiệp</a></li>
-                    <li><a href="#">Vay Vốn</a></li>
-                    <li><a href="#">Thẻ</a></li>
-                    <li><a href="#">Liên Hệ</a></li>
-                    <li><a href="#" class="login-btn">Đăng Nhập</a></li>
+                    <li><a href="/index.html">Trang Chủ</a></li>
+                    <li><a href="/pages/profile-manager.html">Cá Nhân</a></li>
+                    <li><a href="/pages/blog.html">Bài viết</a></li>
+                    <li><a href="/pages/1_thongtincanhan.html">Vay Vốn</a></li>
+                    <li><a href="/pages/credit-card-management.html">Thẻ</a></li>
+                    <li><a href="/pages/about.html">Liên Hệ</a></li>
+                    <li><a href="/pages/login-register.html" class="login-btn">Đăng Nhập</a></li>
                 </ul>
             </nav>
         </div>
@@ -70,13 +683,13 @@
         
         <div class="featured-container">
             <div class="featured-main">
-                <img src="https://cafefcdn.com/203337114487263232/2025/3/21/tp-nganhang-2591-106-1742516715725-1742516715939238935335.jpg" alt="Tin tức nổi bật">
+                <img src="https://images.baoangiang.com.vn/image/fckeditor/upload/2022/20220831/images/gui-tiet-kiem.jpg" alt="Tin tức nổi bật">
                 <div class="featured-content">
                     <span class="featured-tag">Đầu Tư</span>
                     <h3>Xu Hướng Đầu Tư Bất Động Sản Năm 2025: Cơ Hội và Thách Thức</h3>
                     <p>Phân tích sâu về thị trường bất động sản trong năm 2025, những khu vực tiềm năng và các yếu tố ảnh hưởng đến quyết định đầu tư.</p>
                     <div class="featured-meta">
-                        <img src="/api/placeholder/30/30" alt="Tác giả">
+                        <img src="https://i.vnbusiness.vn/2024/06/03/-8487-1717409579_860x0.jpg" alt="Tác giả">
                         <span>Nguyễn Minh Tuấn • 18/03/2025</span>
                     </div>
                 </div>
@@ -84,7 +697,7 @@
             
             <div class="featured-secondary">
                 <div class="secondary-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/21/tp-nganhang-2591-106-1742516715725-1742516715939238935335.jpg" alt="Tin tức phụ">
+                    <img src="https://www.bankexpress.vn/wp-content/uploads/2023/03/thu-tuc-vay-von-ngan-hang.jpg" alt="Tin tức phụ">
                 </div>
                 <div class="secondary-content">
                     <span class="featured-tag">Tài Chính Cá Nhân</span>
@@ -96,7 +709,7 @@
             
             <div class="featured-secondary">
                 <div class="secondary-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/21/tp-nganhang-2591-106-1742516715725-1742516715939238935335.jpg" alt="Tin tức phụ">
+                    <img src="https://www.hlbank.com.vn/content/dam/vn-global/images/official_image/personal/blog/loan/lai-suat-vay-ngan-hang.jpg" alt="Tin tức phụ">
                 </div>
                 <div class="secondary-content">
                     <span class="featured-tag">Vay Vốn</span>
@@ -117,7 +730,7 @@
         <div class="posts-grid">
             <div class="post-card">
                 <div class="post-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/20/photo-1742481078146-17424810789911082903889.png" alt="Blog post">
+                    <img src="https://truyenhinhnghean.vn/file/4028eaa46735a26101673a4df345003c/102023/ngah-1653970279_20231007085339.jpg" alt="Blog post">
                 </div>
                 <div class="post-content">
                     <div class="post-meta">
@@ -132,7 +745,7 @@
             
             <div class="post-card">
                 <div class="post-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/20/photo-1742481078146-17424810789911082903889.png" alt="Blog post">
+                    <img src="https://truyenhinhnghean.vn/file/4028eaa46735a26101673a4df345003c/102023/ngah-1653970279_20231007085339.jpg" alt="Blog post">
                 </div>
                 <div class="post-content">
                     <div class="post-meta">
@@ -147,7 +760,7 @@
             
             <div class="post-card">
                 <div class="post-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/20/photo-1742481078146-17424810789911082903889.png" alt="Blog post">
+                    <img src="https://truyenhinhnghean.vn/file/4028eaa46735a26101673a4df345003c/102023/ngah-1653970279_20231007085339.jpg" alt="Blog post">
                 </div>
                 <div class="post-content">
                     <div class="post-meta">
@@ -162,7 +775,7 @@
             
             <div class="post-card">
                 <div class="post-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/20/photo-1742481078146-17424810789911082903889.png" alt="Blog post">
+                    <img src="https://truyenhinhnghean.vn/file/4028eaa46735a26101673a4df345003c/102023/ngah-1653970279_20231007085339.jpg" alt="Blog post">
                 </div>
                 <div class="post-content">
                     <div class="post-meta">
@@ -177,7 +790,7 @@
             
             <div class="post-card">
                 <div class="post-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/20/photo-1742481078146-17424810789911082903889.png" alt="Blog post">
+                    <img src="https://truyenhinhnghean.vn/file/4028eaa46735a26101673a4df345003c/102023/ngah-1653970279_20231007085339.jpg" alt="Blog post">
                 </div>
                 <div class="post-content">
                     <div class="post-meta">
@@ -192,7 +805,7 @@
             
             <div class="post-card">
                 <div class="post-image">
-                    <img src="https://cafefcdn.com/203337114487263232/2025/3/20/photo-1742481078146-17424810789911082903889.png" alt="Blog post">
+                    <img src="https://truyenhinhnghean.vn/file/4028eaa46735a26101673a4df345003c/102023/ngah-1653970279_20231007085339.jpg" alt="Blog post">
                 </div>
                 <div class="post-content">
                     <div class="post-meta">
@@ -232,74 +845,58 @@
    <footer>
     <div class="footer-content">
         <div class="footer-column">
-            <h3>Ngân Hàng XYZ</h3>
-            <p>Đối tác tài chính đáng tin cậy, đồng hành cùng bạn trên mọi hành trình.</p>
-            <div class="social-links">
-                <a href="#" class="social-link">f</a>
-                <a href="#" class="social-link">in</a>
-                <a href="#" class="social-link">t</a>
-                <a href="#" class="social-link">y</a>
-            </div>
+            <h3>Về Chúng Tôi</h3>
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Tin tức & Sự kiện</a></li>
+                <li><a href="#">Quan hệ cổ đông</a></li>
+                <li><a href="#">Cơ hội nghề nghiệp</a></li>
+                <li><a href="#">Trách nhiệm xã hội</a></li>
+            </ul>
         </div>
         
         <div class="footer-column">
-            <h3>Dịch Vụ</h3>
+            <h3>Sản Phẩm & Dịch Vụ</h3>
             <ul>
-                <li><a href="#">Tài Khoản & Tiết Kiệm</a></li>
-                <li><a href="#">Thẻ Tín Dụng</a></li>
-                <li><a href="#">Vay Cá Nhân</a></li>
-                <li><a href="#">Vay Mua Nhà</a></li>
-                <li><a href="#">Bảo Hiểm</a></li>
+                <li><a href="#">Tài khoản & Tiết kiệm</a></li>
+                <li><a href="#">Thẻ tín dụng</a></li>
+                <li><a href="#">Thẻ ghi nợ</a></li>
+                <li><a href="#">Vay cá nhân</a></li>
+                <li><a href="#">Vay mua nhà</a></li>
+                <li><a href="#">Vay mua xe</a></li>
             </ul>
         </div>
         
         <div class="footer-column">
             <h3>Hỗ Trợ</h3>
             <ul>
-                <li><a href="#">Câu Hỏi Thường Gặp</a></li>
-                <li><a href="#">Biểu Phí</a></li>
-                <li><a href="#">An Toàn & Bảo Mật</a></li>
-                <li><a href="#">Chính Sách Bảo Mật</a></li>
-                <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="#">Biểu phí dịch vụ</a></li>
+                <li><a href="#">Lãi suất</a></li>
+                <li><a href="#">Mạng lưới ATM</a></li>
+                <li><a href="#">Mạng lưới chi nhánh</a></li>
+                <li><a href="#">Liên hệ</a></li>
             </ul>
         </div>
         
         <div class="footer-column">
-            <h3>Liên Hệ</h3>
-            <ul>
-                <li>123 Đường ABC, Quận XYZ, TP. HCM</li>
-                <li>Hotline: 1900 xxxx</li>
-                <li>Email: info@nganhangxyz.com</li>
-                <li>Giờ làm việc: 8:00 - 17:00</li>
-            </ul>
+            <h3>Liên Hệ Với Chúng Tôi</h3>
+            <p>Tổng đài: 1900 xxxx</p>
+            <p>Email: info@xyzbank.com.vn</p>
+            <p>Trụ sở chính: 123 Đường ABC, Quận 1, TP.HCM</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">F</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">Y</a>
+                <a href="#" class="social-link">I</a>
+            </div>
         </div>
     </div>
     
     <div class="footer-bottom">
-        <p>&copy; 2025 Ngân Hàng XYZ. Tất cả quyền được bảo lưu.</p>
+        <p>&copy; 2025 Ngân hàng XYZ. Tất cả quyền được bảo lưu.</p>
     </div>
 </footer>
-
-<script>
-    // Mobile Menu Toggle
-    document.querySelector('.menu-toggle').addEventListener('click', function() {
-        document.querySelector('nav').classList.toggle('active');
-        
-        const spans = document.querySelectorAll('.menu-toggle span');
-        spans[0].classList.toggle('rotate-45');
-        spans[1].classList.toggle('opacity-0');
-        spans[2].classList.toggle('rotate-negative-45');
-        
-        if (spans[0].classList.contains('rotate-45')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
-    });
-</script>
 </body>
 </html>
